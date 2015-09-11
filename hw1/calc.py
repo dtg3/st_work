@@ -43,7 +43,7 @@ class Test_000_Calculator(unittest.TestCase):
         for c in '0123456789':
             self.assertEqual(evaluate(c),i)
             i = i + 1
-    
+
     def test_multiple_digits(self):
         self.assertEqual(evaluate('99999'),99999)
         self.assertEqual(evaluate('12345'),12345)
@@ -60,6 +60,9 @@ class Test_000_Calculator(unittest.TestCase):
     def test_floating_numbers(self):
         self.assertEqual(evaluate('123.456'),123.456)
         self.assertEqual(evaluate('-123.456'),-123.456)
+
+    def test_hex_to_decimal(self):
+        self.assertEqual(evaluate('0x0'),0)
 
 if __name__ == "__main__":
     unittest.main()
