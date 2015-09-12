@@ -61,8 +61,11 @@ class Test_000_Calculator(unittest.TestCase):
         self.assertEqual(evaluate('123.456'),123.456)
         self.assertEqual(evaluate('-123.456'),-123.456)
 
-    def test_hex_to_decimal(self):
-        self.assertEqual(evaluate('0x0'),0)
+    def test_single_char_hex_to_decimal(self):
+        i = 0
+        for c in '0123456789ABCDEF':
+            self.assertEqual(evaluate('0x' + c), i)
+            i += 1
 
 if __name__ == "__main__":
     unittest.main()
