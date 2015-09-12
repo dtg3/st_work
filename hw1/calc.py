@@ -84,6 +84,12 @@ class Test_000_Calculator(unittest.TestCase):
 
     def test_multiple_hex_to_decimal(self):
         self.assertEqual(evaluate('0x00'), 0)
+        self.assertEqual(evaluate('0xFF'), 255)
+
+        self.assertEqual(evaluate('0x0000000000000000000000000000000000000'), 0)
+        self.assertEqual(evaluate('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'),
+            356811923176489970264571492362373784095686655)
+
 
 if __name__ == "__main__":
     unittest.main()
