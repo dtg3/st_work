@@ -31,9 +31,14 @@ def evaluate_floating_point_number(s):
             v = v / 10
     return n
 
+def evaluate_single_hex(s):
+    return "0123456789ABCDEF".index(s)
+
 def evaluate(s):
     if s.startswith("-"):
         return evaluate(s[1:]) * -1
+    if s.startswith("0x"):
+        return evaluate_single_hex(s[2:])
     return evaluate_floating_point_number(s)
 
 class Test_000_Calculator(unittest.TestCase):
