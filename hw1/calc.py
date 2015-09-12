@@ -90,6 +90,9 @@ class Test_000_Calculator(unittest.TestCase):
         self.assertEqual(evaluate('0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'),
             356811923176489970264571492362373784095686655)
 
+        self.assertEqual(evaluate('0x1234567890'), 78187493520)
+        self.assertEqual(evaluate('0xABCDEF'), 11259375)
+
 
 if __name__ == "__main__":
     unittest.main()
