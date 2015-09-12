@@ -34,11 +34,21 @@ def evaluate_floating_point_number(s):
 def evaluate_single_hex(s):
     return "0123456789ABCDEF".index(s)
 
+def evaluate_hex_number(s):
+    exp = len(s) - 1
+    num = 0
+
+    for c in s:
+        num += (evaluate_single_hex(c) * (16 ** exp))
+        exp -= 1
+
+    return num
+
 def evaluate(s):
     if s.startswith("-"):
         return evaluate(s[1:]) * -1
     if s.startswith("0x"):
-        return evaluate_single_hex(s[2:])
+        return evaluate_hex_number(s[2:])
     return evaluate_floating_point_number(s)
 
 class Test_000_Calculator(unittest.TestCase):
@@ -74,9 +84,6 @@ class Test_000_Calculator(unittest.TestCase):
 
     def test_multiple_hex_to_decimal(self):
         self.assertEqual(evaluate('0x00'), 0)
-
-
-
 
 if __name__ == "__main__":
     unittest.main()
