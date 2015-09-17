@@ -32,4 +32,30 @@
 		* Digging aronud in old code.
 
 * Extending the Calculator
-* 
+	* Play cool music while python-ing
+
+* Internal vs External
+	* Internal
+		* Functions and classes
+	* External
+		* Special library to manipulate library from outside
+		* Automated GUI, Webdrivers, etc.
+
+* Simulate GUI
+	* Find GUI events and call them manually
+
+* Automate the GUI via OS
+	* Use programmed access to browser or OS
+	* Create mouse, keyboard, events
+	* Application won't know it's automated
+
+* Selenium
+	* GUI Automation
+	* Manipulates webbrowsers
+	* Now uses WebDriver
+	* Can program WebDriver directly
+
+* WebDriver
+	* Accesses web browers
+	* Works on most browsers
+	* 
