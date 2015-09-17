@@ -60,3 +60,9 @@
 	* Works on most browsers
 
 * Django....unchained
+
+* Homework 2
+	* Get systems running so CH2 can be done
+	* Convince if cone and circle volume area supports
+	* Write something with webdriver that does something interesting:
+		* Verify that Amazon sells coffee cups
