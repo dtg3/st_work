@@ -66,3 +66,7 @@
 	* Convince if cone and circle volume area supports
 	* Write something with webdriver that does something interesting:
 		* Verify that Amazon sells coffee cups
+
+### Wednesday, September 23, 2015
+
+* Functional Story
