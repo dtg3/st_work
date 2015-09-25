@@ -1,4 +1,5 @@
 from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
 import unittest
 
 class NewVisitorTest(unittest.TestCase):
@@ -20,19 +21,33 @@ class NewVisitorTest(unittest.TestCase):
 
 		# He notices the the application title mentions to-do
 		self.assertIn('To-Do', self.browser.title)
-		self.fail('Finish the test!')
+		header_text = self.browser.find_element_by_tag_name('h1').text
+		self.assertIn('To-Do', header_text)
 
 		# The starting screen allows The Doctor it jump right in and make
 		#	a new to-do item
+		inputbox = self.browser.find_element_by_id('id_new_item')
+		self.assertEqual(
+			inputbox.get_attribute('placeholder'),
+			'Enter a to-do item'
+		)
 
 		# He enters in "Replace space-time locator"
+		inputbox.send_keys('Replace space-time locator')
 
 		# He hits enter, and the page updates showing:
 		# 	"1: Replace space-time locator"
+		inputbox.send_keys(Keys.ENTER)
+		table = self.browser.find_element_by_id('id_list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertTrue(
+			any(row.text == '1: Replace space-time locator' for row in rows)
+		)
 
 		# An empty text box remains on the page allowing for another to-do item
 		# 	to be entered. The Doctor enters:
 		#	"Repair Tardis console"
+		self.fail('Finish the test!')
 
 		# The page updates again, and now shows both items on the list
 
