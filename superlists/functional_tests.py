@@ -11,6 +11,11 @@ class NewVisitorTest(unittest.TestCase):
 	def tearDown(self):
 		self.browser.quit()
 
+	def check_for_row_in_list_table(self, row_text):
+		table = self.browser.find_element_by_id('id_list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn(row_text, [row.text for row in rows])
+
 	def test_can_start_a_list_and_retrieve_it_later(self):
 		# The Doctor's Tardis is acting up. He's decided to use an
 		# 	online to-do app to keep track of all the things he needs
@@ -38,10 +43,7 @@ class NewVisitorTest(unittest.TestCase):
 		# He hits enter, and the page updates showing:
 		# 	"1: Replace space-time locator"
 		inputbox.send_keys(Keys.ENTER)
-
-		table = self.browser.find_element_by_id('id_list_table')
-		rows = table.find_elements_by_tag_name('tr')
-		self.assertIn('1: Replace space-time locator', [row.text for row in rows])
+		self.check_for_row_in_list_table('1: Replace space-time locator')
 
 		# An empty text box remains on the page allowing for another to-do item
 		# 	to be entered. The Doctor enters:
@@ -51,10 +53,8 @@ class NewVisitorTest(unittest.TestCase):
 		inputbox.send_keys(Keys.ENTER)		
 
 		# The page updates again, and now shows both items on the list
-		table = self.browser.find_element_by_id('id_list_table')
-		rows = table.find_elements_by_tag_name('tr')
-		self.assertIn('1: Replace space-time locator', [row.text for row in rows])
-		self.assertIn('2: Repair Tardis console' ,[row.text for row in rows])
+		self.check_for_row_in_list_table('1: Replace space-time locator')
+		self.check_for_row_in_list_table('2: Repair Tardis console')
 
 		# The Doctor is always busy saving the planet (or any planet), so he needs
 		# 	to make sure that the site lets him save his list for later.
