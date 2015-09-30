@@ -38,24 +38,29 @@ class NewVisitorTest(unittest.TestCase):
 		# He hits enter, and the page updates showing:
 		# 	"1: Replace space-time locator"
 		inputbox.send_keys(Keys.ENTER)
+
 		table = self.browser.find_element_by_id('id_list_table')
 		rows = table.find_elements_by_tag_name('tr')
-		self.assertTrue(
-			any(row.text == '1: Replace space-time locator' for row in rows),
-			"New to-do item did not appear in table"
-		)
+		self.assertIn('1: Replace space-time locator', [row.text for row in rows])
 
 		# An empty text box remains on the page allowing for another to-do item
 		# 	to be entered. The Doctor enters:
 		#	"Repair Tardis console"
-		self.fail('Finish the test!')
+		inputbox = self.browser.find_element_by_id('id_new_item')
+		inputbox.send_keys('Repair Tardis console')
+		inputbox.send_keys(Keys.ENTER)		
 
 		# The page updates again, and now shows both items on the list
+		table = self.browser.find_element_by_id('id_list_table')
+		rows = table.find_elements_by_tag_name('tr')
+		self.assertIn('1: Replace space-time locator', [row.text for row in rows])
+		self.assertIn('2: Repair Tardis console' ,[row.text for row in rows])
 
 		# The Doctor is always busy saving the planet (or any planet), so he needs
 		# 	to make sure that the site lets him save his list for later.
 		#	Upon saving the list, a unique URL is generated for him along with some
 		# 	explanatory text to that effect
+		self.fail('Finish the test!')
 
 		# The Doctor visits the URL and makes sure that the list appears
 
