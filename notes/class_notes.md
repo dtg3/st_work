@@ -70,3 +70,7 @@
 ### Wednesday, September 23, 2015
 
 * Functional Story
+
+### Wednesday, September 30, 2015
+
+* 
