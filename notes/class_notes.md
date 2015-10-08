@@ -73,4 +73,8 @@
 
 ### Wednesday, September 30, 2015
 
-* 
+* Example
+
+### Wednesday, October 7, 2015
+
+* In class coding
