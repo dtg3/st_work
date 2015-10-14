@@ -78,3 +78,59 @@
 ### Wednesday, October 7, 2015
 
 * In class coding
+
+### Wednesday, October 14, 2015
+
+* BBST - Black Box Software Testing
+	* Cem Kaner 
+	* Jim Bach
+	* Rebecca Fielder
+* Test on external behavior and evidence
+* What is suitable? What is quality?
+* Software testing is:
+	* an empirical, technical, investigation, conducted to provide stakeholders with information about the quality of the product or service under test.
+	* brief: Evidence of quality
+	* empirical - based on evidence (reasoning about facts + basic facts)
+	* technical - technology will be used
+	* investigation - active plan to collect facts. specfic activity designed to take specific input
+	* stakeholders - people who have a vested interest in the software
+	* quality - different stakeholders have different ideas of quality. Value is based on stakeholder.
+		* Network, Security, Accounting, Business, etc.
+* Quality - Value of usefulness to someone....subjective
+* Information is probabilistic...cause to believe
+	* How much probability is required?
+* Definitions
+	* are not absolute
+	* are meaningful
+	* need to know what is meant here (in the domain of application)
+* Black Box
+	* Can't see internals
+	* Testing external expectations
+	* Tested by those that know the domain
+	* They verify that the thing is behaving properly
+		* NOT THAT INTERALLY IT IS CORRECT
+	* aka "Behavioral Testing"
+	* Oracle
+		* External reference of correctness
+* Glass Box
+	* Used to be called White Box 
+	* Test against internal expectation
+	* Does what programmer expects
+	* Easier to do
+	* Less valuable to customer
+	* aka "Structural Testing"
+* Levels of testing
+	* Unit
+		* Testing of parts
+	* Integration
+		* Testing of parts together
+			* 1-1
+			* Star
+				* Test one thing....and everything connected to it
+			* All parts
+		* Do parts work together
+	* System
+		* Testing of the business system in its environment
+		* Are the needs of the stakeholders met
+	* Orthogonal to BB/GB testing
+	* For instance, we can unit test sorted([])
