@@ -173,3 +173,70 @@
 	* Laws
 	* Oracles are incomplete
 	* Oracles are heuristic
+	* Tests can't be any better than oracles
+* Evidence
+	* Evidence about quality
+	* What are we measuring? What's a good measure and how do we measure it?
+* Contexts
+	* Prototyping
+	* Mass-marked Development
+	* Critical Environments
+	* Lawsuits
+* Testing Mission
+	* Blackbox
+	* What are we trying to do?
+	* What is the success criteria?
+	* How much time and resources do you have to meet success criteria?
+* Testing Strategy
+	* Given Limits
+		* Time
+		* Resources
+	* What will you do?
+	* How to maximize benefits?
+		* LikelyHood = L 
+		* Cost of it happening = C
+		* Time = T
+		* LC*T
+		* In testing can we reduce either of these?
+			* Usually in testing you worry about L
+				* Can be worried about T too
+			* In monitoring you worry about C and T
+		* CBA - cost benefit analysis
+* Scenario Testing
+	* Complex story
+		* How is it used in business?
+	* Make sure the story works
+		* Each element of the story is verified
+	* Normal usage works
+	* Viewed as important / realistic
+* Domain Testing
+	* Consider all possibilities
+	* Group in to partitions
+	* Select from partitions
+	* Select from boundaries
+	* Unusual tests are viewed as unlikely
+		* Tend to find the unusual
+	* Two Bad Outcomes
+		* Takes lots of time
+		* Viewed as unlikely
+			* Why did you bother
+	* Needs automation, fast, cost effective
+* Techniques
+	* James Bach
+	* Some or all:
+		* Analyze the situation
+		* Model the test space
+		* Select what to cover
+		* Determine test oracles
+		* Configure the test system
+		* Operate the test system
+		* Observe the system
+* TDD as a Technique
+	* Feature is desired
+	* Feature gets operated
+	* Feature examples
+	* Code assertions
+	* Unit tests
+	* Run the tests
+	* Assertion failures
+
