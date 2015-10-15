@@ -134,3 +134,42 @@
 		* Are the needs of the stakeholders met
 	* Orthogonal to BB/GB testing
 	* For instance, we can unit test sorted([])
+* Functional testing
+	* Given input...does it give proper output?
+* Non-Functional testing (Parafunctional)
+	* While it's generating the correct output
+		* how is it performing?
+			* usable
+			* stable
+			* performance/efficient
+			* secure
+			* etc
+* Acceptance testing
+	* Is someone going to pay for it?
+		* Have terms of contract been met
+	* Is there a contract?
+	* Implied contract
+		* Development vs Marketing
+		* R&D vs Product
+		* etc
+	* Doesn't have to be a written contract
+	* Agreement fulfilment
+* Why Test?
+	* There are always decisions behind testing
+		* Need to make a decision and want to make a good decision
+		* Testing helps with the decision to use/continue/kill/etc a system/application
+	* Gather evidence of quality
+	* There are objectives
+	* Hard to know how well
+	* Hard to know how much information is needed?
+	* Every test is a question
+		* Did we break something?
+		* Chance is > 0
+	* Not about absolute knowledge (Probabalistic)
+* Oracles
+	* Accepted definition of correctnes
+	* Mathematics
+	* Experts
+	* Laws
+	* Oracles are incomplete
+	* Oracles are heuristic
