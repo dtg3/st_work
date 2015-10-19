@@ -13,7 +13,7 @@ browser.find_element_by_xpath("//a[@id='header-find-panel-trigger']").click()
 
 # Click in the "Location" textbox
 time.sleep(1)
-browser.find_element_by_xpath("//input[@id='search-location']").click()
+browser.find_element_by_xpath("//input[@id='global-header-search-location']").click()
 
 # Select the "Rewards number" textbox
 time.sleep(1)
