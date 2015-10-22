@@ -241,3 +241,100 @@
 	* Assertion failures
 
 HW: Find bug on site / Send webdriver code
+
+### Wednesday, October 21, 2015
+#### Testing Challenges
+* Web Sites
+	* Exposed applications
+	* Accessible to technology
+	* Requirements are known
+	* Oracles are available
+	* BBST methods
+* Testing Challenges
+	* FOSS Packages - Does it work for a given purpose?
+		* Easy to get 
+		* Well Understood
+		* Testable by usual methods
+		* Glass Box testing, perhaps
+		* useful to community
+* NYPL
+	* Is the new version better than the old version?
+	* Are the features the same?
+	* What should a card catalogue do?
+	* How can we tell that it's doing it?
+	* How can old catalogue be used as an oracle?
+		* Assume it's correct.
+	* 10 requirements
+		* figure out how to test them, and test them
+	* Verify isbn numbers from external sources (AMAZON)
+	* Can use other oracles
+* Mission
+	* Define Value
+		* Stakeholders
+		* What are the values and how to requirements define them?
+	* Define failures
+		* What are failure modes?
+	* Come up with a plan (1 page long)
+	* Non-member activities
+* Getting Started
+	* How to start?
+		* Specific Book
+			* How many copies
+			* When available
+			* Available
+			* Where a book is/do they have it
+			* How many by keyword
+			* pages a book has
+			* format / media
+			* language
+			* Book requests for characters (non-english)
+		* What to test?
+			* Against oracle
+			* How many books with keyword?
+			* Funnel based on paper books
+		* What to test?
+			* Multiple Keywords
+		* How to test?
+			* Python / Pyunit
+			* Webdriver
+
+* Homework A
+	* One Week
+		* Assess the NYPL new catalog
+		* Initial Report
+			* A test plan
+			* A test methodology
+			* A prototype of a test
+	* Two weeks
+		* A test report
+		* At least 10 specific requirements tested
+		* Automated tests
+	* This is acceptance testing
+	* URL spoofing
+	* Functional requirements
+
+* Homework B
+	* Same thing
+	* Python Package - tinydb
+* Suggested: Tinydb
+	* Small database package (small demo forthcoming)
+* 10,000 customers
+* purchases up to 1,000 items per customer
+* customers interests
+* one document per customer
+* imagine 10 requirements
+	* delete remove item from customer list
+	* add 
+	* do at scale
+	* at last item for last customer
+	* shouldn't be able to remove customers that exist
+* Is this a good idea to use this database?
+* 10 million data items
+* how many apples, when, etc.
+* A document of things, of purchases
+* Alternative structures
+* VIABILITY
+* Slow compared to sqlite?
+* Fast implementation for TinyDB?
+	* another pip install (native C Json implementation)
+* 
