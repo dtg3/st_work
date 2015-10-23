@@ -65,7 +65,7 @@ attack and verifying the responsiveness of the site.
   1. View location of a copy
   1. Searching with non-ASCII characters is allowable
   1. An SQL injection fails
-  1. The site is responsive
+  1. The search bar does not go outside of the boundaries of the page
 
 The reason for the search selections is based on the assumption that the
 majority of searches are from the user searching for a specific book by keyword,
@@ -78,7 +78,8 @@ that non-ASCII characters are supported. We verify that SQL injections fail
 to prevent the entire database of the library catalog from being destroyed.
 Lastly, as part of the contract for the new design called for a responsive,
 resizable site. This will be tested via resizing the browser and testing that
-the contents are not outside of the bounds of the browser.
+the search bar, the most important element in the catalog, is not outside of
+the bounds of the browser.
 
 Each test will be conducted within a python script that utilizes selenium
 to manipulate and test the web browser contents. The contents and results
@@ -89,3 +90,26 @@ the old product produces. Thus, both the old product and Amazon's book results
 are used as testing oracles.
 
 ### Prototype
+Due to familiarity with selenium in terms of functional testing, the
+selected prototype test was one of a non-fuctional test for responsiveness
+in the design. Here, we test that the search bar is within the bounds of the
+window when the window has been resized to be smaller.
+
+```python
+def test10_searchbar_in_bounds_after_resize(self):
+    # shrink the new window size
+    prev_size = self.browser.get_window_size()
+    nww, nwh = 500, 560
+    self.browser.set_window_size(nww, nwh)
+
+    # get new search bar width, height, x, y after resize
+    search_bar = self.browser.find_element_by_id("searchString")
+    nsw, nsh = search_bar.size['width'], search_bar.size['height']
+    nsx, nsy = search_bar.location['x'], search_bar.location['y']
+
+    assert(nsw + nsx <= nww)
+    assert(nsh + nsy <= nwh)
+
+    # reset to original size
+    self.browser.set_window_size(prev_size['width'], prev_size['height'])
+```
