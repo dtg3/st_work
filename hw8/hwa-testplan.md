@@ -15,6 +15,7 @@ the public. As a result, the library's interests are strongly aligned with the
 public's in terms of functionality and usability, stability, performance, and
 security.
 
+### Requirements
 There are many points of possible failure in the new product. The most basic
 expected functionality, which is largely based on the old catalog, is as
 follows:
@@ -48,6 +49,8 @@ attack. This includes:
   - Minimum values (empty search)
   - Using HTML in the search
 
+
+### Test plan & methodology
 We narrow down this list to a set of 10 functional and non-functional tests.
 The most commonly used functionality involves searching and viewing a specific
 book, so these features are extensively tested. The non-functional set of tests
@@ -63,3 +66,26 @@ attack and verifying the responsiveness of the site.
   1. Searching with non-ASCII characters is allowable
   1. An SQL injection fails
   1. The site is responsive
+
+The reason for the search selections is based on the assumption that the
+majority of searches are from the user searching for a specific book by keyword,
+its title, or specifically by ISBN. Additionally, because the NYPL has
+multiple locations, a search by location is also crucial. Being able to view
+the ISBN, the number of copies, and the location of that copy is also critical
+for the user to be able to find a specific book that was searched for. As
+multiple languages are supported within the library catalog, we must verify
+that non-ASCII characters are supported. We verify that SQL injections fail
+to prevent the entire database of the library catalog from being destroyed.
+Lastly, as part of the contract for the new design called for a responsive,
+resizable site. This will be tested via resizing the browser and testing that
+the contents are not outside of the bounds of the browser.
+
+Each test will be conducted within a python script that utilizes selenium
+to manipulate and test the web browser contents. The contents and results
+as shown in the new product are at times compared to results as found via
+Amazon, when a specific ISBN for a book is known. Additionally, the contents
+and results in the new product are compared to the content and results that
+the old product produces. Thus, both the old product and Amazon's book results
+are used as testing oracles.
+
+### Prototype
