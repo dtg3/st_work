@@ -1,27 +1,35 @@
 from tinydb import TinyDB, where
 import json
+import unittest
+import calc
 
-db = TinyDB('db.json')
-#db.purge()
-#db.insert( {'followers': [{'name': 'don'}, {'name': 'john'}]} )
+class Test_000_TinyDB(unittest.TestCase):
 
-# get and print current state of database (could search for anything here)
-f = db.all()
-print(f)
+    def test_insert_list_item(self):
+        #Setup
+        #db.purge()
+        db.insert( {'items': [{'name': 'bacon'}, {'name': 'eggs'}]} )
 
-# get the first element in the list, at key followers. append to this list
-#f[0]['followers']
-#f[0]['followers'].append( {'name': 'heather'} )
-#print(f[0])
+        # get and print current state of database (could search for anything here)
+        #f = db.all()
+        #print(f)
 
-el = db.get(where('followers'))
+        #get the first element in the list, at key followers. append to this list
+        #f[0]['followers']
+        #f[0]['followers'].append( {'name': 'heather'} )
+        #print(f[0])
 
-print(el)
-print(el.eid)
+        #el = db.get(where('followers'))
 
-# update using this new list, where the old list is (at eid = 1)
-#db.update(f[0], eids=[1] )
-#print( db.all() )
+        #print(el)
+        #print(el.eid)
 
-#db.purge()
-db.close()
+        # update using this new list, where the old list is (at eid = 1)
+        #db.update(f[0], eids=[1] )
+        #print( db.all() )
+
+        db.purge()
+        db.close()
+
+if __name__ == "__main__":
+    unittest.main()
