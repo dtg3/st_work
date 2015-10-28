@@ -5,7 +5,7 @@ import unittest
 
 db = TinyDB("data.json")
 
-class TinyDBInsert(unittest.TestCase):
+class TinyDBAdd(unittest.TestCase):
 
     def setUp(self):
         db.insert( { 'customerid': 1, 'items': [ {'name': 'raspberry pi', 'price': 30}, {'name': 'pi case', 'price': 8} ] } )
@@ -15,7 +15,7 @@ class TinyDBInsert(unittest.TestCase):
         db.purge()
         db.close()
 
-    def test_tinydb_insert(self):
+    def test_tinydb_add_item(self):
         # Check that new item doesn't exist for customer 1
         self.assertEqual(db.count((where('customerid') == 1) & (where('items').any(where('name') == 'battery'))), 0)
 

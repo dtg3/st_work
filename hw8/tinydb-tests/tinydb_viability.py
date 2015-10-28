@@ -1,7 +1,7 @@
 import unittest
-import tiny_db_insert
+import tiny_db_add
 
-class Test_000_Insert(tiny_db_insert.TinyDBInsert):
+class Test_000_Add(tiny_db_add.TinyDBAdd):
    pass
 
 if __name__ == "__main__":
