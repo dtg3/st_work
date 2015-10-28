@@ -4,7 +4,7 @@
 A development team requires a database for a small store. The database could
 have up to 1,000 customers with each customer having a purchase history of
 approximately 500 items. For this task, the development team suggests the
-python package TinyDB be used as the document based database engine. The mission
+python package [TinyDB](https://github.com/msiemens/tinydb) be used as the document based database engine. The mission
 of the viability test is to assess the potential of using TinyDB for the
 purposes of a small store customer database.
 
@@ -27,7 +27,7 @@ item is crucial for any basic database operations. We expand further upon these
 requirements by specifying that each of the following requirements must also be
 met, provided a maximal database of 1,000 customers, each with 500 items:
   - Add customer/item takes less than 0.05 seconds
-  - Deleting a customer/item takes less than .1 seconds
+  - Deleting a customer/item takes less than 0.1 seconds
   - Accessing a customer/item takes less than 0.01 seconds
 
 We expect the most frequent operation that is performed is the accessing of
