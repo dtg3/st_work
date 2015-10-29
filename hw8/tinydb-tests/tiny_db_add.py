@@ -32,5 +32,6 @@ class TinyDBAdd(unittest.TestCase):
         # Check that new item now exists
         self.assertEqual(db.count((where('customerid') == 1) & (where('items').any(where('name') == 'battery'))), 1)
 
+
 if __name__ == '__main__':
     unittest.main(warnings='ignore')

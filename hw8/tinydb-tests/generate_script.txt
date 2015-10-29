@@ -1,0 +1,24 @@
+USE ME AT: http://www.json-generator.com/
+[
+  '{{repeat(2)}}',
+  {
+    cust_id: '{{guid()}}',
+    cust_name: '{{company()}}',
+    orders: [
+      '{{repeat(2)}}',
+      {
+        order_id: '{{guid()}}',
+        order_date: '{{date(new Date(2014, 0, 1), new Date(), "YYYY-MM-dd")}}',
+        items: [
+          '{{repeat(2)}}',
+          {
+          item_id: '{{guid()}}',
+          item_name: '{{lorem(1, "words")}}',
+          item_qty:  '{{integer(1, 100)}}',
+          item_cost: '{{floating(1, 200, 2, "$0.00")}}'
+          }
+          ]
+      }
+      ]
+  }
+ ]

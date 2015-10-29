@@ -1,0 +1,86 @@
+[
+  {
+    "cust_id": "3ae8a9f7-0f54-498b-8e89-b8fe7e43a8a9",
+    "cust_name": "Fuelworks",
+    "orders": [
+      {
+        "order_id": "d8a40a2b-facc-4d0a-8b0f-32a4e9d7080c",
+        "order_date": "2014-05-08",
+        "items": [
+          {
+            "item_id": "fce48268-0b4c-4fba-994f-03174ab9c9a0",
+            "item_name": "dolor",
+            "item_qty": 80,
+            "item_cost": "$129.78"
+          },
+          {
+            "item_id": "5c5cbb74-1a91-4e11-ad5e-9b92cd0e9142",
+            "item_name": "consectetur",
+            "item_qty": 87,
+            "item_cost": "$156.82"
+          }
+        ]
+      },
+      {
+        "order_id": "87d66f89-bff7-4d18-900d-a8410cc42a1b",
+        "order_date": "2015-10-13",
+        "items": [
+          {
+            "item_id": "4af5e7e1-6078-406b-aae8-3968b9455f9d",
+            "item_name": "eiusmod",
+            "item_qty": 82,
+            "item_cost": "$50.35"
+          },
+          {
+            "item_id": "ff18ea2a-9f4e-4381-8773-a7f1de8fcbbe",
+            "item_name": "ea",
+            "item_qty": 89,
+            "item_cost": "$134.87"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "cust_id": "7dd1b8a5-cdda-4133-a3ae-eb00e7c31cde",
+    "cust_name": "Xleen",
+    "orders": [
+      {
+        "order_id": "b371a85e-e955-430c-8653-aca6a040a5b5",
+        "order_date": "2014-01-06",
+        "items": [
+          {
+            "item_id": "6e4573eb-17e2-418a-ba8b-437b624c70d5",
+            "item_name": "do",
+            "item_qty": 69,
+            "item_cost": "$144.72"
+          },
+          {
+            "item_id": "264b9963-e982-4528-a8b3-f9e57cd6464f",
+            "item_name": "consequat",
+            "item_qty": 62,
+            "item_cost": "$153.40"
+          }
+        ]
+      },
+      {
+        "order_id": "fe742040-3956-449b-9b21-85698337f954",
+        "order_date": "2015-03-19",
+        "items": [
+          {
+            "item_id": "5e0f78a4-1656-48fa-a94d-c024b9f7e93f",
+            "item_name": "sunt",
+            "item_qty": 93,
+            "item_cost": "$101.88"
+          },
+          {
+            "item_id": "669caf71-f6d4-4740-a264-239183fda556",
+            "item_name": "eu",
+            "item_qty": 48,
+            "item_cost": "$161.89"
+          }
+        ]
+      }
+    ]
+  }
+]

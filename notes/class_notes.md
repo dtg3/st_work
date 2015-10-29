@@ -337,4 +337,13 @@ HW: Find bug on site / Send webdriver code
 * Slow compared to sqlite?
 * Fast implementation for TinyDB?
 	* another pip install (native C Json implementation)
-* 
+
+### Wednesday, October 28, 2015
+* Testing helps to assess value
+* Separation of concerns
+* Separate tests from app code
+* Refactor on the third time you find code
+* Project:
+	* git checkout chapter_05
+	* manage.py migrate
+	* manage.py test
