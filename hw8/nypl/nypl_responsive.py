@@ -3,10 +3,9 @@ from selenium.webdriver.common.keys import Keys
 import time
 import unittest
 
-class NYPLCatalogTest(unittest.TestCase):
+class NYPLResponsive(unittest.TestCase):
     nypl_new_catalog = "http://browse.nypl.org"
     npyl_old_catalog = "http://catalog.nypl.org"
-
 
     def setUp(self):
         options = webdriver.ChromeOptions()
@@ -20,7 +19,7 @@ class NYPLCatalogTest(unittest.TestCase):
     def tearDown(self):
         self.browser.quit()
 
-    def test10_searchbar_in_bounds_after_resize(self):
+    def test001_searchbar_in_bounds_after_resize(self):
         # set new window size to mobile device size
         prev_size = self.browser.get_window_size()
         nww, nwh = 500, 560
