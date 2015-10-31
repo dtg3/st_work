@@ -1,15 +1,11 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import time
 import unittest
 
 class NYPLSearch(unittest.TestCase):
     nypl_new_catalog = "http://browse.nypl.org"
     nypl_old_catalog = "http://catalog.nypl.org"
-    book = "hitchhiker's guide to the galaxy"
 
     def setUp(self):
         options = webdriver.ChromeOptions()
@@ -37,12 +33,6 @@ class NYPLSearch(unittest.TestCase):
         self.assertTrue(len(titleDivs) > 0, 
             "Did not return any results when searching for keyword '" + keyword + "'")
 
-        # those results are related to what was searched for
-        # FAILING. Can't rely on the title matching the keyword, our keyword
-        # could be for the author
-        #for div in titleDivs:
-        #    titleStr = div.find_element_by_xpath("./span/a").text
-        #    assert(titleStr.lower().find(keyword.lower()) != -1)
 
     # perform an advanced search by title and verify
     #   - there are results
@@ -65,12 +55,6 @@ class NYPLSearch(unittest.TestCase):
         self.assertTrue(len(titleDivs) > 0, 
             "Did not return any results when searching for title '" + title + "'")
 
-        # those results are related to what was searched for
-        # FAILS - NYPL new shows title names that don't have the book name in them
-        # can't rely on the title matching the keyword. keyword may be the author, who knows
-        #for div in titleDivs:
-        #    titleStr = div.find_element_by_xpath("./span/a").text
-        #    assert(titleStr.lower().find(title.lower()) != -1)
 
     # perform an search by isbn and verify
     #   - there is a limited number of results (ISBN is unique)
@@ -189,7 +173,7 @@ class NYPLSearch(unittest.TestCase):
     def FAILING_test01_keyword_search_matches_old_catalog(self):
         # search for and get title of each book in new catalog
         search_bar = self.browser.find_element_by_id("searchString")
-        search_bar.send_keys(self.book)
+        search_bar.send_keys("hithhiker's guide to the galaxy")
         search_bar.send_keys(Keys.ENTER)
         self.browser.implicitly_wait(5)
 
@@ -202,7 +186,7 @@ class NYPLSearch(unittest.TestCase):
         self.browser.get(self.nypl_old_catalog)
         self.browser.implicitly_wait(3)
         search_bar = self.browser.find_element_by_name("searcharg")
-        search_bar.send_keys(self.book)
+        search_bar.send_keys("hithhiker's guide to the galaxy")
         search_bar.send_keys(Keys.ENTER)
         self.browser.implicitly_wait(5)
 
@@ -212,7 +196,7 @@ class NYPLSearch(unittest.TestCase):
 
         # search for HHGTTG
         search_bar = self.browser.find_element_by_name("searcharg")
-        search_bar.send_keys(self.book)
+        search_bar.send_keys("hithhiker's guide to the galaxy")
         search_bar.send_keys(Keys.ENTER)
         self.browser.implicitly_wait(5)
 
