@@ -9,11 +9,7 @@ class NYPLView(unittest.TestCase):
     nypl_old_catalog = "http://catalog.nypl.org"
 
     def setUp(self):
-        options = webdriver.ChromeOptions()
-        options.add_experimental_option("excludeSwitches", ["ignore-certificate-errors","test-type"])
-        options.add_argument("--start-maximized")
-        options.add_argument('--disable-application-cache')
-        self.browser = webdriver.Chrome(chrome_options=options)
+        self.browser = webdriver.Firefox()
         self.browser.get(self.nypl_new_catalog)
         self.browser.implicitly_wait(3)
 
@@ -44,12 +40,57 @@ class NYPLView(unittest.TestCase):
                 foundISBN = True
         self.assertTrue(foundISBN, "Could not retrieve ISBN " + isbn + ".")
 
-    def test_001_view_isbn(self):
+
+    def t_copies_match(self, isbn):
+        self.browser.get(self.nypl_new_catalog)
+        self.browser.implicitly_wait(3)
+
+        utils.search_new_catalog_by_keyword(self.browser, isbn)
+        titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
+        self.assertTrue(len(titleDivs) > 0, "Could not retrieve any results based on isbn " + isbn)
+
+        # get book copies from new catalog
+        titleDivs[0].find_element_by_xpath("./span/a").click()
+        self.browser.implicitly_wait(3)
+        expand = self.browser.find_elements_by_class_name("allRowItem")
+        if len(expand) > 0:
+            expand[0].click()
+            self.browser.implicitly_wait(3)
+
+        nCopies = self.browser.find_elements_by_xpath("//table[@class='itemTable']//tr")
+
+        # search book by isbn in old catalog
+        self.browser.get(self.nypl_old_catalog)
+        self.browser.implicitly_wait(3)
+
+        self.browser.find_element_by_xpath("//select[@id='searchtype']/option[@value='i']").click()
+
+        search_bar = self.browser.find_element_by_name("searcharg")
+        search_bar.send_keys(isbn)
+        search_bar.send_keys(Keys.ENTER)
+        self.browser.implicitly_wait(5)
+
+        # book copies from old catalog
+        expand = self.browser.find_elements_by_xpath("//input[@type='submit'][@value='View additional copies or search for a specific volume/copy']")
+        if len(expand) > 0:
+            expand[0].click()
+            self.browser.implicitly_wait(3)
+        oCopies = self.browser.find_elements_by_xpath("//div[@class='additionalCopies']/table//tr")
+
+        # new catalog may have more resources (online) to pull copies from
+        self.assertTrue(len(nCopies) >= len(oCopies))
+
+
+    def DISABLED_test_001_view_isbn(self):
         self.t_can_get_isbn("0345391802")
         self.t_can_get_isbn("1451673310")
         self.t_can_get_isbn("0471043281")
         self.t_can_get_isbn("0811874559")
 
+
+    def test_002_view_copies(self):
+        self.t_copies_match("0345391802")
+        self.t_copies_match("0553212478")
 
 
 if __name__ == '__main__':
