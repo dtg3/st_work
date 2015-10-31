@@ -170,7 +170,7 @@ class NYPLSearch(unittest.TestCase):
 
     def FAILING_test01_keyword_search_matches_old_catalog(self):
         # search for and get title of each book in new catalog
-        utils.search_new_catalog_by_keyword(self.browser, "hithhiker's guide to the galaxy")
+        utils.search_new_catalog_by_keyword(self.browser, "hitchhiker's guide to the galaxy")
 
         titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
         newTitles = []
@@ -181,7 +181,7 @@ class NYPLSearch(unittest.TestCase):
         self.browser.get(self.nypl_old_catalog)
         self.browser.implicitly_wait(3)
         search_bar = self.browser.find_element_by_name("searcharg")
-        search_bar.send_keys("hithhiker's guide to the galaxy")
+        search_bar.send_keys("hitchhiker's guide to the galaxy")
         search_bar.send_keys(Keys.ENTER)
         self.browser.implicitly_wait(5)
 
@@ -191,7 +191,7 @@ class NYPLSearch(unittest.TestCase):
 
         # search for HHGTTG
         search_bar = self.browser.find_element_by_name("searcharg")
-        search_bar.send_keys("hithhiker's guide to the galaxy")
+        search_bar.send_keys("hitchhiker's guide to the galaxy")
         search_bar.send_keys(Keys.ENTER)
         self.browser.implicitly_wait(5)
 
