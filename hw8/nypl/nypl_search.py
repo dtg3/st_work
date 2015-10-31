@@ -9,11 +9,7 @@ class NYPLSearch(unittest.TestCase):
     nypl_old_catalog = "http://catalog.nypl.org"
 
     def setUp(self):
-        options = webdriver.ChromeOptions()
-        options.add_experimental_option("excludeSwitches", ["ignore-certificate-errors","test-type"])
-        options.add_argument("--start-maximized")
-        options.add_argument('--disable-application-cache')
-        self.browser = webdriver.Chrome(chrome_options=options)
+        self.browser = webdriver.Firefox()
         self.browser.get(self.nypl_new_catalog)
         self.browser.implicitly_wait(3)
 
