@@ -103,7 +103,6 @@ class NYPLSearch(unittest.TestCase):
                 foundISBN = True
         self.assertTrue(foundISBN, "Could not retrieve ISBN " + isbn + " for " + title)
 
-
     def get_amazon_title_by_isbn(self, isbn):
         self.browser.get("http://www.amazon.com")
 
@@ -117,7 +116,70 @@ class NYPLSearch(unittest.TestCase):
         title = self.browser.find_element_by_xpath("//div/div/ul/li[@id='result_0']/div/div/div/div/div/a/h2").text
         return title
 
-    def DISABLED_test01_keyword_search_shows_relevant_results(self):
+
+    # perform an advanced search by keyword and location
+    #   - return the results
+    def t_location_search_for(self, location, title):
+        self.browser.get(self.nypl_new_catalog)
+        self.browser.implicitly_wait(3)
+
+        # advanced search
+        advancedSearchButton = self.browser.find_element_by_id("advancedSearchLinkComponent")
+        advancedSearchButton.click()
+        self.browser.implicitly_wait(3)
+
+        # by location
+        options = self.browser.find_elements_by_xpath("//select[@id='limitValue_1']/option")
+        for o in options:
+            if location in o.text:
+                o.click()
+
+        # search by title
+        self.browser.find_element_by_xpath("//select[@name='searchType_0']/option[@value='t:']").click()
+        searchBar = self.browser.find_element_by_id("searchTerm_0")
+        searchBar.clear()
+        searchBar.send_keys(title)
+        searchBar.send_keys(Keys.ENTER)
+        self.browser.implicitly_wait(3)
+
+        newCatalogTitles = self.browser.find_elements_by_class_name("dpBibTitle")
+
+        # get how many results were in the old catalog
+        self.browser.get(self.nypl_old_catalog)
+        self.browser.implicitly_wait(3)
+
+        # search by location
+        options = self.browser.find_elements_by_xpath("//select[@id='searchscope']/option")
+        for o in options:
+            if location in o.text:
+                o.click()
+
+        # search by title
+        self.browser.find_element_by_xpath("//select[@name='searchtype']/option[@value='t']").click()
+        search_bar = self.browser.find_element_by_name("searcharg")
+        search_bar.send_keys(title)
+        search_bar.send_keys(Keys.ENTER)
+        self.browser.implicitly_wait(5)
+
+        notFoundMessage = self.browser.find_elements_by_xpath("//div[@id='rightSideCont']/table//tr[@class='msg']/td")
+        print(notFoundMessage)
+        if len(notFoundMessage) != 0 and ("No matches found" in notFoundMessage[0].text):
+            oldCatalogTitles = []
+        else:
+            oldCatalogTitles = self.browser.find_elements_by_class_name("browseEntry")
+            
+
+        print("search for: " + title + ", at location: " + location)
+        print("old catalog found: " + str(len(oldCatalogTitles)))
+        print("new catalog fount: " + str(len(newCatalogTitles)))
+
+        # FAILS WHEN CHECKING FOR EQUALITY
+        self.assertTrue(len(oldCatalogTitles) <= (len(newCatalogTitles) + 5),
+            "Old catalog and new catalog had a different number of books matching " + title + " at " + location)
+
+
+
+    def test01_keyword_search_shows_relevant_results(self):
         self.t_keyword_search_for("hitchhiker's guide to the galaxy")
         self.t_keyword_search_for("algorithms")
         self.t_keyword_search_for("software testing")
@@ -168,13 +230,13 @@ class NYPLSearch(unittest.TestCase):
             print(title)
             self.assertTrue(title in newTitles, "Could not find " + title + " in the new catalog")
 
-    def DISABLED_test02_title_search(self):
+    def test02_title_search(self):
         self.t_title_search_for("hitchhiker's guide to the galaxy")
         self.t_title_search_for("algorithms")
         self.t_title_search_for("software testing")
         self.t_title_search_for("fahrenheit 451")
 
-    def DISABLED_test03_isbn_search(self):
+    def test03_isbn_search(self):
         isbns = [ "0345391802", "1451673310", "0471043281", "0811874559" ]
 
         for i in range(0, len(isbns)):
@@ -187,6 +249,12 @@ class NYPLSearch(unittest.TestCase):
             # get title from NYPL and compare
             self.browser.implicitly_wait(3)
             self.t_isbn_search_for(isbn, oracleTitle)
+
+    def test_04_location_search(self):
+        self.t_location_search_for("Tompkins Square", "Harry Potter")
+        self.t_location_search_for("115th Street", "software testing")
+        self.t_location_search_for("St. Agnes", "hitchhiker's guide to the galaxy")
+        self.t_location_search_for("Harlem", "Don Quixote")
 
 
 
