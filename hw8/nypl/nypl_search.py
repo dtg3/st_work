@@ -1,5 +1,8 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import time
 import unittest
 
@@ -31,7 +34,8 @@ class NYPLSearch(unittest.TestCase):
         self.browser.implicitly_wait(5)
 
         titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
-        assert(len(titleDivs) > 0)
+        self.assertTrue(len(titleDivs) > 0, 
+            "Did not return any results when searching for keyword '" + keyword + "'")
 
         # those results are related to what was searched for
         # FAILING. Can't rely on the title matching the keyword, our keyword
@@ -58,7 +62,8 @@ class NYPLSearch(unittest.TestCase):
         self.browser.implicitly_wait(3)
 
         titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
-        assert(len(titleDivs) > 0)
+        self.assertTrue(len(titleDivs) > 0, 
+            "Did not return any results when searching for title '" + title + "'")
 
         # those results are related to what was searched for
         # FAILS - NYPL new shows title names that don't have the book name in them
@@ -67,15 +72,59 @@ class NYPLSearch(unittest.TestCase):
         #    titleStr = div.find_element_by_xpath("./span/a").text
         #    assert(titleStr.lower().find(title.lower()) != -1)
 
+    # perform an search by isbn and verify
+    #   - there is a limited number of results (ISBN is unique)
+    #   - it matches the title we expect
+    #   - that result have the ISBN we searched for
+    def t_isbn_search_for(self, isbn, title):
+        self.t_keyword_search_for(isbn)
 
-    def test01_keyword_search_shows_relevant_results(self):
+        # we get one results
+        titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
+        self.assertTrue(len(titleDivs) < 5, "Found more than 4 results when searching by ISBN " + isbn)
+
+        # result matches our expected title
+        returnedTitleLink = titleDivs[0].find_element_by_xpath("./span/a")
+        returnedTitleStr = returnedTitleLink.text
+        self.assertTrue(returnedTitleStr.lower() in title.lower(), 
+            "Returned title of '" + returnedTitleStr.lower() + "' did not match expected title '" + title.lower() + "' ")
+
+        # that result has the ISBN we searched for
+        returnedTitleLink.click()
+        self.browser.implicitly_wait(3)
+        additionalInfoDivs = self.browser.find_elements_by_class_name("bibInfoData")
+        addInfo = []
+        for item in additionalInfoDivs:
+            addInfo.append(item.text)
+
+        foundISBN = False
+        for item in additionalInfoDivs:
+            if isbn in item.text:
+                foundISBN = True
+        self.assertTrue(foundISBN, "Could not retrieve ISBN " + isbn + " for " + title)
+
+
+    def get_amazon_title_by_isbn(self, isbn):
+        self.browser.get("http://www.amazon.com")
+
+        searchBar = self.browser.find_element_by_id("twotabsearchtextbox")
+        searchBar.clear()
+        searchBar.send_keys(isbn)
+        searchBar.send_keys(Keys.ENTER)
+        self.browser.implicitly_wait(6)
+
+        # first result is our title
+        title = self.browser.find_element_by_xpath("//div/div/ul/li[@id='result_0']/div/div/div/div/div/a/h2").text
+        return title
+
+    def DISABLED_test01_keyword_search_shows_relevant_results(self):
         self.t_keyword_search_for("hitchhiker's guide to the galaxy")
         self.t_keyword_search_for("algorithms")
         self.t_keyword_search_for("software testing")
         self.t_keyword_search_for("fahrenheit 451")
 
 
-    def DISABLED_test02_keyword_search_matches_old_catalog(self):
+    def FAILING_test02_keyword_search_matches_old_catalog(self):
         # search for and get title of each book in new catalog
         search_bar = self.browser.find_element_by_id("searchString")
         search_bar.send_keys(self.book)
@@ -113,17 +162,31 @@ class NYPLSearch(unittest.TestCase):
         # the new catalog has more results, but it should at least have
         # all the results from the old catalog
         # FAILING
-        assert(len(newTitles) >= len(oldTitles))
+        self.assertTrue(len(newTitles) >= len(oldTitles),
+            "New catalog has less results than the old catalg. New: " + str(len(newTitles)) + ", Old: " + str(len(oldTitles)))
         for title in oldTitles:
             print(title)
-            assert(title in newTitles)
+            self.assertTrue(title in newTitles, "Could not find " + title + " in the new catalog")
 
-    def test03_title_search(self):
+    def DISABLED_test03_title_search(self):
         self.t_title_search_for("hitchhiker's guide to the galaxy")
         self.t_title_search_for("algorithms")
         self.t_title_search_for("software testing")
         self.t_title_search_for("fahrenheit 451")
 
+    def test04_isbn_search(self):
+        isbns = [ "0345391802", "1451673310", "0471043281", "0811874559" ]
+
+        for i in range(0, len(isbns)):
+            isbn = isbns[i]
+
+            # get expected title from amazon
+            oracleTitle = self.get_amazon_title_by_isbn(isbn)
+            self.browser.get(self.nypl_new_catalog)
+
+            # get title from NYPL and compare
+            self.browser.implicitly_wait(3)
+            self.t_isbn_search_for(isbn, oracleTitle)
 
 
 
