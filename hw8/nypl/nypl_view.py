@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import unittest
+import nypl_utility as utils
 
 class NYPLView(unittest.TestCase):
     nypl_new_catalog = "http://browse.nypl.org"
@@ -20,10 +21,7 @@ class NYPLView(unittest.TestCase):
         self.browser.quit()
 
     def t_can_get_isbn(self, isbn):
-        search_bar = self.browser.find_element_by_id("searchString")
-        search_bar.send_keys(isbn)
-        search_bar.send_keys(Keys.ENTER)
-        self.browser.implicitly_wait(5)
+        utils.search_new_catalog_by_keyword(self.browser, isbn)
 
          # we get one results
         titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")

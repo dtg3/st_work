@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import unittest
+import nypl_utility as utils
 
 class NYPLSearch(unittest.TestCase):
     nypl_new_catalog = "http://browse.nypl.org"
@@ -24,11 +25,7 @@ class NYPLSearch(unittest.TestCase):
 
     # search by a specific keyword and verify there are results
     def t_keyword_search_for(self, keyword):
-        search_bar = self.browser.find_element_by_id("searchString")
-        search_bar.send_keys(keyword)
-        search_bar.send_keys(Keys.ENTER)
-        self.browser.implicitly_wait(5)
-
+        utils.search_new_catalog_by_keyword(self.browser, keyword)
         titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
         self.assertTrue(len(titleDivs) > 0, 
             "Did not return any results when searching for keyword '" + keyword + "'")
@@ -61,10 +58,11 @@ class NYPLSearch(unittest.TestCase):
     #   - it matches the title we expect
     #   - that result have the ISBN we searched for
     def t_isbn_search_for(self, isbn, title):
-        self.t_keyword_search_for(isbn)
+        utils.search_new_catalog_by_keyword(self.browser, isbn)
 
         # we get one results
         titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
+        self.assertTrue(len(titleDivs) > 0, "Found no results searching by ISBN " + isbn)
         self.assertTrue(len(titleDivs) < 5, "Found more than 4 results when searching by ISBN " + isbn)
 
         # result matches our expected title
@@ -172,10 +170,7 @@ class NYPLSearch(unittest.TestCase):
 
     def FAILING_test01_keyword_search_matches_old_catalog(self):
         # search for and get title of each book in new catalog
-        search_bar = self.browser.find_element_by_id("searchString")
-        search_bar.send_keys("hithhiker's guide to the galaxy")
-        search_bar.send_keys(Keys.ENTER)
-        self.browser.implicitly_wait(5)
+        utils.search_new_catalog_by_keyword(self.browser, "hithhiker's guide to the galaxy")
 
         titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
         newTitles = []
