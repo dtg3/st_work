@@ -124,7 +124,7 @@ class NYPLSearch(unittest.TestCase):
         self.t_keyword_search_for("fahrenheit 451")
 
 
-    def FAILING_test02_keyword_search_matches_old_catalog(self):
+    def FAILING_test01_keyword_search_matches_old_catalog(self):
         # search for and get title of each book in new catalog
         search_bar = self.browser.find_element_by_id("searchString")
         search_bar.send_keys(self.book)
@@ -168,13 +168,13 @@ class NYPLSearch(unittest.TestCase):
             print(title)
             self.assertTrue(title in newTitles, "Could not find " + title + " in the new catalog")
 
-    def DISABLED_test03_title_search(self):
+    def DISABLED_test02_title_search(self):
         self.t_title_search_for("hitchhiker's guide to the galaxy")
         self.t_title_search_for("algorithms")
         self.t_title_search_for("software testing")
         self.t_title_search_for("fahrenheit 451")
 
-    def test04_isbn_search(self):
+    def DISABLED_test03_isbn_search(self):
         isbns = [ "0345391802", "1451673310", "0471043281", "0811874559" ]
 
         for i in range(0, len(isbns)):
