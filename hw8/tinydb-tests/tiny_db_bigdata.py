@@ -8,11 +8,10 @@ db = TinyDB("bigdata.json")
 class TinyDBBigData(unittest.TestCase):
 
     def setUp(self):
-        '''with open('test_data.json') as data_file:
+         with open('test_data.json') as data_file:
             data = json.load(data_file)
-            db.insert(data[0])
-            print (db.all())'''
-        db.purge()
+            for record in data:
+                db.insert(record)
 
     def tearDown(self):
         db.close()
