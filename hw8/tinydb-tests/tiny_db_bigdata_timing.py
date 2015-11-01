@@ -23,6 +23,8 @@ class TinyDBBigDataTiming(unittest.TestCase):
                 f.write(str(rec) + ',' + str(t) + '\n')
                 rec = rec + 1
 
+            f.close()
+
     def tearDown(self):
         db.close()
 
