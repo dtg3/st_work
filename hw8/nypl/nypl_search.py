@@ -134,7 +134,7 @@ class NYPLSearch(unittest.TestCase):
         search_bar = self.browser.find_element_by_name("searcharg")
         search_bar.send_keys(title)
         search_bar.send_keys(Keys.ENTER)
-        self.browser.implicitly_wait(5)
+        self.browser.implicitly_wait(3)
 
         notFoundMessage = self.browser.find_elements_by_xpath("//div[@id='rightSideCont']/table//tr[@class='msg']/td")
         if len(notFoundMessage) != 0 and ("No matches found" in notFoundMessage[0].text):
@@ -170,7 +170,7 @@ class NYPLSearch(unittest.TestCase):
         search_bar = self.browser.find_element_by_name("searcharg")
         search_bar.send_keys("hitchhiker's guide to the galaxy")
         search_bar.send_keys(Keys.ENTER)
-        self.browser.implicitly_wait(5)
+        self.browser.implicitly_wait(3)
 
         # get the old catalog
         self.browser.get(utils.nypl_old_catalog)
@@ -180,7 +180,7 @@ class NYPLSearch(unittest.TestCase):
         search_bar = self.browser.find_element_by_name("searcharg")
         search_bar.send_keys("hitchhiker's guide to the galaxy")
         search_bar.send_keys(Keys.ENTER)
-        self.browser.implicitly_wait(5)
+        self.browser.implicitly_wait(3)
 
         titleContainers = self.browser.find_elements_by_class_name("briefcitTitle")
         oldTitles = []

@@ -65,7 +65,7 @@ class NYPLView(unittest.TestCase):
         search_bar = self.browser.find_element_by_name("searcharg")
         search_bar.send_keys(isbn)
         search_bar.send_keys(Keys.ENTER)
-        self.browser.implicitly_wait(5)
+        self.browser.implicitly_wait(3)
 
         # book copies from old catalog
         expand = self.browser.find_elements_by_xpath("//input[@type='submit'][@value='View additional copies or search for a specific volume/copy']")
@@ -104,7 +104,7 @@ class NYPLView(unittest.TestCase):
         search_bar = self.browser.find_element_by_name("searcharg")
         search_bar.send_keys(isbn)
         search_bar.send_keys(Keys.ENTER)
-        self.browser.implicitly_wait(5)
+        self.browser.implicitly_wait(3)
 
         # book copies from old catalog
         expand = self.browser.find_elements_by_xpath("//input[@type='submit'][@value='View additional copies or search for a specific volume/copy']")
@@ -114,6 +114,7 @@ class NYPLView(unittest.TestCase):
         oLocations = self.browser.find_elements_by_xpath("//div[@class='additionalCopies']/table//tr/td/*[1]")
 
         # at least all the old catalog's locations are in the new catalog
+        # FAILING
         print("old:")
         for place in oLocations:
             print(place.text)
