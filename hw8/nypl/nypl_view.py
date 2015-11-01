@@ -65,7 +65,7 @@ class NYPLView(unittest.TestCase):
         search_bar = self.browser.find_element_by_name("searcharg")
         search_bar.send_keys(isbn)
         search_bar.send_keys(Keys.ENTER)
-        self.browser.implicitly_wait(5)
+        self.browser.implicitly_wait(3)
 
         # book copies from old catalog
         expand = self.browser.find_elements_by_xpath("//input[@type='submit'][@value='View additional copies or search for a specific volume/copy']")
@@ -77,8 +77,50 @@ class NYPLView(unittest.TestCase):
         # new catalog may have more resources (online) to pull copies from
         self.assertTrue(len(nCopies) >= len(oCopies))
 
+    def t_copy_location(self, isbn):
+        utils.search_new_catalog_by_keyword(self.browser, isbn)
+        titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
+        self.assertTrue(len(titleDivs) > 0, "Could not retrieve any results based on isbn " + isbn)
 
-    def DISABLED_test_001_view_isbn(self):
+        # get book copies from new catalog
+        titleDivs[0].find_element_by_xpath("./span/a").click()
+        self.browser.implicitly_wait(3)
+        expand = self.browser.find_elements_by_class_name("allRowItem")
+        if len(expand) > 0:
+            expand[0].click()
+            self.browser.implicitly_wait(3)
+        nLocations = self.browser.find_elements_by_xpath("//table[@class='itemTable']//tr/td/*[1]")
+        nLocationsText = []
+
+        for place in nLocations:
+            nLocationsText.append(place.text)
+
+        # search book by isbn in old catalog
+        self.browser.get(utils.nypl_old_catalog)
+        self.browser.implicitly_wait(3)
+        self.browser.find_element_by_xpath("//select[@id='searchtype']/option[@value='i']").click()
+
+        search_bar = self.browser.find_element_by_name("searcharg")
+        search_bar.send_keys(isbn)
+        search_bar.send_keys(Keys.ENTER)
+        self.browser.implicitly_wait(3)
+
+        # book copies from old catalog
+        expand = self.browser.find_elements_by_xpath("//input[@type='submit'][@value='View additional copies or search for a specific volume/copy']")
+        if len(expand) > 0:
+            expand[0].click()
+            self.browser.implicitly_wait(3)
+        oLocations = self.browser.find_elements_by_xpath("//div[@class='additionalCopies']/table//tr/td/*[1]")
+
+        # at least all the old catalog's locations are in the new catalog
+        # FAILING
+        for place in oLocations:
+            self.assertTrue(place.text in nLocationsText,
+                "According to old catalog, " + isbn + " exists at " + place.text + ", but doesn't appear in new catalog")
+
+
+
+    def test_001_view_isbn(self):
         self.t_can_get_isbn("0345391802")
         self.t_can_get_isbn("1451673310")
         self.t_can_get_isbn("0471043281")
@@ -88,6 +130,10 @@ class NYPLView(unittest.TestCase):
     def test_002_view_copies(self):
         self.t_copies_match("0345391802")
         self.t_copies_match("0553212478")
+
+    def test_003_view_copy_location(self):
+        self.t_copy_location("0345391802")
+        self.t_copy_location("0553212478")
 
 
 if __name__ == '__main__':
