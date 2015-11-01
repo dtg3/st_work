@@ -6,7 +6,7 @@ import unittest
 db = TinyDB("bigdatatiming.json")
 f = open('big_timing.csv', 'w')
 
-class TinyDBBigDataTiming(unittest.TestCase):
+class TinyDBInsertTiming(unittest.TestCase):
 
     def setUp(self):
         with open('artifacts/test_data.json') as data_file:

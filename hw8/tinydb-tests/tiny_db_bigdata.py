@@ -8,7 +8,7 @@ db = TinyDB("bigdata.json")
 f = open('big_op_timing.csv', 'w')
 f.write("op, time\n")
 
-class TinyDBBigDataTiming(unittest.TestCase):
+class TinyDBBigData(unittest.TestCase):
 
     def setUp(self):
         db.insert(

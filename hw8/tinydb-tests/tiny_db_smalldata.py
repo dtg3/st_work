@@ -5,7 +5,7 @@ import unittest
 
 db = TinyDB("data.json")
 
-class TinyDBAdd(unittest.TestCase):
+class TinyDBSmallData(unittest.TestCase):
 
     def setUp(self):
         db.insert( { 'customerid': 1, 'items': [ {'name': 'raspberry pi', 'price': 30}, {'name': 'pi case', 'price': 8} ] } )
