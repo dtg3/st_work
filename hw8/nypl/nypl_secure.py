@@ -13,7 +13,7 @@ class NYPLSecure(unittest.TestCase):
 	def tearDown(self):
 		self.browser.quit()
 
-	def DISABLED_test_can_search_with_nonascii_characters(self):
+	def test_can_search_with_nonascii_characters(self):
 		# look for the art of war
 		utils.search_new_catalog_by_keyword(self.browser, "孫子兵法")
 		titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")

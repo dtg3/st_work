@@ -120,14 +120,14 @@ class NYPLView(unittest.TestCase):
 
 
 
-    def DISABLED_test_001_view_isbn(self):
+    def test_001_view_isbn(self):
         self.t_can_get_isbn("0345391802")
         self.t_can_get_isbn("1451673310")
         self.t_can_get_isbn("0471043281")
         self.t_can_get_isbn("0811874559")
 
 
-    def DISABLED_test_002_view_copies(self):
+    def test_002_view_copies(self):
         self.t_copies_match("0345391802")
         self.t_copies_match("0553212478")
 
