@@ -5,18 +5,15 @@ import unittest
 import nypl_utility as utils
 
 class NYPLView(unittest.TestCase):
-    nypl_new_catalog = "http://browse.nypl.org"
-    nypl_old_catalog = "http://catalog.nypl.org"
-
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.get(self.nypl_new_catalog)
+        self.browser.get(utils.nypl_new_catalog)
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
         self.browser.quit()
 
-    def t_can_get_isbn(self, isbn):
+    def t_can_get_isbn(self, isbn): 
         utils.search_new_catalog_by_keyword(self.browser, isbn)
 
          # we get one results
@@ -42,7 +39,7 @@ class NYPLView(unittest.TestCase):
 
 
     def t_copies_match(self, isbn):
-        self.browser.get(self.nypl_new_catalog)
+        self.browser.get(utils.nypl_new_catalog)
         self.browser.implicitly_wait(3)
 
         utils.search_new_catalog_by_keyword(self.browser, isbn)
@@ -60,7 +57,7 @@ class NYPLView(unittest.TestCase):
         nCopies = self.browser.find_elements_by_xpath("//table[@class='itemTable']//tr")
 
         # search book by isbn in old catalog
-        self.browser.get(self.nypl_old_catalog)
+        self.browser.get(utils.nypl_old_catalog)
         self.browser.implicitly_wait(3)
 
         self.browser.find_element_by_xpath("//select[@id='searchtype']/option[@value='i']").click()

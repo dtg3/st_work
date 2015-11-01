@@ -2,14 +2,12 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
 import unittest
+import nypl_utility as utils
 
 class NYPLResponsive(unittest.TestCase):
-    nypl_new_catalog = "http://browse.nypl.org"
-    npyl_old_catalog = "http://catalog.nypl.org"
-
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.get(self.nypl_new_catalog)
+        self.browser.get(utils.nypl_new_catalog)
         self.browser.implicitly_wait(3)
 
     def tearDown(self):

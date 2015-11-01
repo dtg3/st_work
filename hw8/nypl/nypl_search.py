@@ -5,12 +5,9 @@ import unittest
 import nypl_utility as utils
 
 class NYPLSearch(unittest.TestCase):
-    nypl_new_catalog = "http://browse.nypl.org"
-    nypl_old_catalog = "http://catalog.nypl.org"
-
     def setUp(self):
         self.browser = webdriver.Firefox()
-        self.browser.get(self.nypl_new_catalog)
+        self.browser.get(utils.nypl_new_catalog)
         self.browser.implicitly_wait(3)
 
     def tearDown(self):
@@ -98,7 +95,7 @@ class NYPLSearch(unittest.TestCase):
     # perform an advanced search by keyword and location
     #   - return the results
     def t_location_search_for(self, location, title):
-        self.browser.get(self.nypl_new_catalog)
+        self.browser.get(utils.nypl_new_catalog)
         self.browser.implicitly_wait(3)
 
         # advanced search
@@ -123,7 +120,7 @@ class NYPLSearch(unittest.TestCase):
         newCatalogTitles = self.browser.find_elements_by_class_name("dpBibTitle")
 
         # get how many results were in the old catalog
-        self.browser.get(self.nypl_old_catalog)
+        self.browser.get(utils.nypl_old_catalog)
         self.browser.implicitly_wait(3)
 
         # search by location
@@ -140,17 +137,11 @@ class NYPLSearch(unittest.TestCase):
         self.browser.implicitly_wait(5)
 
         notFoundMessage = self.browser.find_elements_by_xpath("//div[@id='rightSideCont']/table//tr[@class='msg']/td")
-        print(notFoundMessage)
         if len(notFoundMessage) != 0 and ("No matches found" in notFoundMessage[0].text):
             oldCatalogTitles = []
         else:
             oldCatalogTitles = self.browser.find_elements_by_class_name("browseEntry")
             
-
-        print("search for: " + title + ", at location: " + location)
-        print("old catalog found: " + str(len(oldCatalogTitles)))
-        print("new catalog fount: " + str(len(newCatalogTitles)))
-
         # FAILS WHEN CHECKING FOR EQUALITY
         self.assertTrue(len(oldCatalogTitles) <= (len(newCatalogTitles) + 5),
             "Old catalog and new catalog had a different number of books matching " + title + " at " + location)
@@ -174,7 +165,7 @@ class NYPLSearch(unittest.TestCase):
             newTitles.append(div.find_element_by_xpath("./span/a").text)
 
         # search for book in old catalog
-        self.browser.get(self.nypl_old_catalog)
+        self.browser.get(utils.nypl_old_catalog)
         self.browser.implicitly_wait(3)
         search_bar = self.browser.find_element_by_name("searcharg")
         search_bar.send_keys("hitchhiker's guide to the galaxy")
@@ -182,7 +173,7 @@ class NYPLSearch(unittest.TestCase):
         self.browser.implicitly_wait(5)
 
         # get the old catalog
-        self.browser.get(self.nypl_old_catalog)
+        self.browser.get(utils.nypl_old_catalog)
         self.browser.implicitly_wait(3)
 
         # search for HHGTTG
@@ -202,7 +193,6 @@ class NYPLSearch(unittest.TestCase):
         self.assertTrue(len(newTitles) >= len(oldTitles),
             "New catalog has less results than the old catalg. New: " + str(len(newTitles)) + ", Old: " + str(len(oldTitles)))
         for title in oldTitles:
-            print(title)
             self.assertTrue(title in newTitles, "Could not find " + title + " in the new catalog")
 
     def test02_title_search(self):
@@ -219,7 +209,7 @@ class NYPLSearch(unittest.TestCase):
 
             # get expected title from amazon
             oracleTitle = self.get_amazon_title_by_isbn(isbn)
-            self.browser.get(self.nypl_new_catalog)
+            self.browser.get(utils.nypl_new_catalog)
 
             # get title from NYPL and compare
             self.browser.implicitly_wait(3)
