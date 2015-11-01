@@ -91,10 +91,9 @@ class NYPLView(unittest.TestCase):
             self.browser.implicitly_wait(3)
         nLocations = self.browser.find_elements_by_xpath("//table[@class='itemTable']//tr/td/*[1]")
         nLocationsText = []
-        print("new:")
+
         for place in nLocations:
             nLocationsText.append(place.text)
-            print(place.text)
 
         # search book by isbn in old catalog
         self.browser.get(utils.nypl_old_catalog)
@@ -115,9 +114,7 @@ class NYPLView(unittest.TestCase):
 
         # at least all the old catalog's locations are in the new catalog
         # FAILING
-        print("old:")
         for place in oLocations:
-            print(place.text)
             self.assertTrue(place.text in nLocationsText,
                 "According to old catalog, " + isbn + " exists at " + place.text + ", but doesn't appear in new catalog")
 
