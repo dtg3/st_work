@@ -9,11 +9,19 @@ class TinyDBAdd(unittest.TestCase):
 
     def setUp(self):
         db.insert( { 'customerid': 1, 'items': [ {'name': 'raspberry pi', 'price': 30}, {'name': 'pi case', 'price': 8} ] } )
-        db.insert( { 'customerid': 2, 'items': [ {'name': 'touch screen', 'price': 90}, {'name': 'bluetooth', 'price': 15} ] } )
 
     def tearDown(self):
         db.purge()
-        db.close()
+
+    def test_tinydb_add_record(self):
+        #Check if new record customer 2 doesn't exist
+        self.assertEqual(db.count((where('customerid') == 2)), 0)
+
+        #Insert record for customer 2
+        db.insert( { 'customerid': 2, 'items': [ {'name': 'touch screen', 'price': 90}, {'name': 'bluetooth', 'price': 15} ] } )
+
+        #Confirm customer 2 has been added
+        self.assertEqual(db.count((where('customerid') == 2)), 1)
 
     def test_tinydb_add_item(self):
         # Check that new item doesn't exist for customer 1
@@ -31,7 +39,6 @@ class TinyDBAdd(unittest.TestCase):
 
         # Check that new item now exists
         self.assertEqual(db.count((where('customerid') == 1) & (where('items').any(where('name') == 'battery'))), 1)
-
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
