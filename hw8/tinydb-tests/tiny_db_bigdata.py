@@ -46,7 +46,7 @@ class TinyDBBigData(unittest.TestCase):
 
 
     def test_tinydb_bigdata_01_add_customer(self):
-        print ("\nADD CUSTOMER")
+        print ("\nBIG DATA --- ADD CUSTOMER")
         self.tearDown()
 
         #verify customer doesn't exist
@@ -86,7 +86,7 @@ class TinyDBBigData(unittest.TestCase):
 
 
     def test_tinydb_bigdata_02_add_item(self):
-        print ("\nADD ITEM")
+        print ("\nBIG DATA --- ADD ITEM")
 
         #Check that order exists
         self.assertEqual(db.count(where('orders').any(where('order_id') == 'd8a40a2b-facc-4d0a-8b0f-32a4e9d7080c')), 1)
@@ -147,7 +147,7 @@ class TinyDBBigData(unittest.TestCase):
 
 
     def test_tinydb_bigdata_03_add_order(self):
-        print ("\nADD ORDER")
+        print ("\nBIG DATA --- ADD ORDER")
         # Ensure order doesn't exist
         self.assertEqual(db.count(where('orders').any(where('order_id') == 'b371a85e-e955-430c-8653-aca6a040a5b5')), 0)
         
@@ -178,9 +178,28 @@ class TinyDBBigData(unittest.TestCase):
         # Ensure order now exists
         self.assertEqual(db.count(where('orders').any(where('order_id') == 'b371a85e-e955-430c-8653-aca6a040a5b5')), 1)
 
+    def test_tinydb_bigdata_04_update_field(self):
+        print("\nBIG DATA --- UPDATE FIELD")
+        self.assertEqual(db.count(where('orders').any(where('order_id') == 'd8a40a2b-facc-4d0a-8b0f-32a4e9d7080c')), 1)
+        
+        t= time.time()
+        result = db.search(where('orders').any(where('order_id') == 'd8a40a2b-facc-4d0a-8b0f-32a4e9d7080c'))
+        element = db.get(where('orders').any(where('order_id') == 'd8a40a2b-facc-4d0a-8b0f-32a4e9d7080c'))
 
-    def test_tinydb_bigdata_04_remove_item(self):
-        print ("\nREMOVE ITEM")
+        for order in result[0]['orders']:
+            if order['order_id'] == 'd8a40a2b-facc-4d0a-8b0f-32a4e9d7080c':
+                order['order_id'] = '11111111-2222-3333-4444-5555555555555'
+                break
+
+        db.update(result[0], eids=[element.eid])
+        t = time.time() - t
+        f.write('update field, ' + str(t) + '\n')
+        self.assertEqual(db.count(where('orders').any(where('order_id') == 'd8a40a2b-facc-4d0a-8b0f-32a4e9d7080c')), 0)
+        self.assertEqual(db.count(where('orders').any(where('order_id') == '11111111-2222-3333-4444-5555555555555')), 1)
+
+
+    def test_tinydb_bigdata_05_remove_item(self):
+        print ("\nBIG DATA --- REMOVE ITEM")
         #Check that order exists
         self.assertEqual(db.count(where('orders').any(where('order_id') == 'd8a40a2b-facc-4d0a-8b0f-32a4e9d7080c')), 1)
 
@@ -233,8 +252,8 @@ class TinyDBBigData(unittest.TestCase):
         self.assertFalse(found)
 
 
-    def test_tinydb_bigdata_05_remove_order(self):
-        print ("\nREMOVE ORDER")
+    def test_tinydb_bigdata_06_remove_order(self):
+        print ("\nBIG DATA --- REMOVE ORDER")
         #Check that order exists
         self.assertEqual(db.count(where('orders').any(where('order_id') == 'd8a40a2b-facc-4d0a-8b0f-32a4e9d7080c')), 1)
 
@@ -263,8 +282,8 @@ class TinyDBBigData(unittest.TestCase):
         self.assertEqual(db.count(where('orders').any(where('order_id') == 'd8a40a2b-facc-4d0a-8b0f-32a4e9d7080c')), 0)
 
 
-    def test_tinydb_bigdata_06_remove_customer(self):
-        print ("\nREMOVE CUSTOMER")
+    def test_tinydb_bigdata_07_remove_customer(self):
+        print ("\nBIG DATA --- REMOVE CUSTOMER")
 
         self.assertEqual(db.count(where('cust_id') == '3ae8a9f7-0f54-498b-8e89-b8fe7e43a8a9'), 1)
         t = time.time()
@@ -273,7 +292,7 @@ class TinyDBBigData(unittest.TestCase):
         db.remove(eids=[element.eid])
 
         t = time.time() - t
-        f.write('Remove customer record, ' + str(t) + '\n')
+        f.write('remove customer record, ' + str(t) + '\n')
         self.assertEqual(db.count(where('cust_id') == '3ae8a9f7-0f54-498b-8e89-b8fe7e43a8a9'), 0)
 
 

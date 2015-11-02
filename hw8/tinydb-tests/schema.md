@@ -1,6 +1,6 @@
 | CUSTOMERS |
-|-> customer_id
-|-> customer_name
+|-> cust_id
+|-> cust_name
 |-> ORDERS |
     |-> order_id
     |-> order_date

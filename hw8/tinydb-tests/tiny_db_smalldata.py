@@ -9,11 +9,16 @@ class TinyDBSmallData(unittest.TestCase):
 
     def setUp(self):
         db.insert( { 'customerid': 1, 'items': [ {'name': 'raspberry pi', 'price': 30}, {'name': 'pi case', 'price': 8} ] } )
+        db.insert( { 'customerid': 3, 'items': [ {'name': 'laptop', 'price': 900}, {'name': 'mouse', 'price': 20} ] } )
+
 
     def tearDown(self):
         db.purge()
 
-    def test_tinydb_add_record(self):
+
+    def test_tinydb_01_add_record(self):
+        print("\nSMALL DATA --- ADD RECORD")
+        
         #Check if new record customer 2 doesn't exist
         self.assertEqual(db.count((where('customerid') == 2)), 0)
 
@@ -23,7 +28,10 @@ class TinyDBSmallData(unittest.TestCase):
         #Confirm customer 2 has been added
         self.assertEqual(db.count((where('customerid') == 2)), 1)
 
-    def test_tinydb_add_item(self):
+
+    def test_tinydb_02_add_item(self):
+        print("\nSMALL DATA --- ADD ITEM")
+        
         # Check that new item doesn't exist for customer 1
         self.assertEqual(db.count((where('customerid') == 1) & (where('items').any(where('name') == 'battery'))), 0)
 
@@ -39,6 +47,60 @@ class TinyDBSmallData(unittest.TestCase):
 
         # Check that new item now exists
         self.assertEqual(db.count((where('customerid') == 1) & (where('items').any(where('name') == 'battery'))), 1)
+
+
+    def test_tinydb_03_update_item(self):
+        print("\nSMALL DATA --- UPDATE ITEM")
+        
+        self.assertEqual(db.count((where('customerid') == 3) & (where('items').any(where('name') == 'laptop'))), 1)
+
+        # Grab customer 3 data
+        result = db.search(where('customerid') == 3)
+        # Grab customer 1 element info
+        element = db.get(where('customerid') == 3)
+
+        for item in result[0]['items']:
+            if item['name'] == 'laptop':
+                item['name'] = 'desktop'
+                break
+
+        db.update(result[0], eids=[element.eid])
+
+        self.assertEqual(db.count((where('customerid') == 3) & (where('items').any(where('name') == 'laptop'))), 0)
+        self.assertEqual(db.count((where('customerid') == 3) & (where('items').any(where('name') == 'desktop'))), 1)        
+        
+
+    def test_tinydb_04_remove_item(self):
+        print("\nSMALL DATA --- REMOVE ITEM")
+       
+        self.assertEqual(db.count((where('customerid') == 1) & (where('items').any(where('name') == 'raspberry pi'))), 1)
+
+        # Grab customer 3 data
+        result = db.search(where('customerid') == 1)
+        # Grab customer 1 element info
+        element = db.get(where('customerid') == 1)
+
+        itemIndex = 0
+        for item in result[0]['items']:
+            if item['name'] == 'raspberry pi':
+                break
+            itemIndex += 1
+
+        del (result[0]['items'][itemIndex])
+
+        db.update(result[0], eids=[element.eid])
+
+        self.assertEqual(db.count((where('customerid') == 1) & (where('items').any(where('name') == 'raspberry pi'))), 0)
+
+    def test_tinydb_05_remove_record(self):
+        print("\nSMALL DATA --- REMOVE RECORD")
+        
+        self.assertEqual(db.count((where('customerid') == 1) & (where('items').any(where('name') == 'raspberry pi'))), 1)
+        element = db.get(where('customerid') == 1)
+        db.remove(eids=[element.eid])
+
+        self.assertEqual(db.count((where('customerid') == 1)), 0)
+
 
 if __name__ == '__main__':
     unittest.main(warnings='ignore')
