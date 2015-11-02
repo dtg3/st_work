@@ -20,7 +20,7 @@ class NYPLSearch(unittest.TestCase):
     def t_keyword_search_for(self, keyword):
         utils.search_new_catalog_by_keyword(self.browser, keyword)
         titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
-        self.assertTrue(len(titleDivs) > 0, 
+        self.assertTrue(len(titleDivs) > 0,
             "Did not return any results when searching for keyword '" + keyword + "'")
 
 
@@ -42,8 +42,15 @@ class NYPLSearch(unittest.TestCase):
         self.browser.implicitly_wait(3)
 
         titleDivs = self.browser.find_elements_by_class_name("dpBibTitle")
-        self.assertTrue(len(titleDivs) > 0, 
+        self.assertTrue(len(titleDivs) > 0,
             "Did not return any results when searching for title '" + title + "'")
+
+        # result matches our expected title
+        for item in titleDivs:
+            returnedTitleLink = item.find_element_by_xpath("./span/a")
+            returnedTitleStr = returnedTitleLink.text
+            self.assertTrue(returnedTitleStr.lower() in title.lower(),
+                "Returned title of '" + returnedTitleStr.lower() + "' did not match expected title '" + title.lower() + "' ")
 
 
     # perform an search by isbn and verify
@@ -61,7 +68,7 @@ class NYPLSearch(unittest.TestCase):
         # result matches our expected title
         returnedTitleLink = titleDivs[0].find_element_by_xpath("./span/a")
         returnedTitleStr = returnedTitleLink.text
-        self.assertTrue(returnedTitleStr.lower() in title.lower(), 
+        self.assertTrue(returnedTitleStr.lower() in title.lower(),
             "Returned title of '" + returnedTitleStr.lower() + "' did not match expected title '" + title.lower() + "' ")
 
         # that result has the ISBN we searched for
@@ -141,7 +148,7 @@ class NYPLSearch(unittest.TestCase):
             oldCatalogTitles = []
         else:
             oldCatalogTitles = self.browser.find_elements_by_class_name("browseEntry")
-            
+
         # FAILS WHEN CHECKING FOR EQUALITY
         self.assertTrue(len(oldCatalogTitles) <= (len(newCatalogTitles) + 5),
             "Old catalog and new catalog had a different number of books matching " + title + " at " + location)
@@ -155,7 +162,7 @@ class NYPLSearch(unittest.TestCase):
         self.t_keyword_search_for("fahrenheit 451")
 
 
-    def FAILING_test01_keyword_search_matches_old_catalog(self):
+    def test01_keyword_search_matches_old_catalog(self):
         # search for and get title of each book in new catalog
         utils.search_new_catalog_by_keyword(self.browser, "hitchhiker's guide to the galaxy")
 
