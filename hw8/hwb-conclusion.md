@@ -134,6 +134,7 @@ This test is used to evaluate that sqlite3 and TinyDB are capable of adding a
 new record to a dataset. Both the small database and big database add a single
 customer record complete with items (and orders in the case of the big database)
 to the database. This test corresponds specifically to the requirements:
+
 *An element can be added to the database*
 *Adding element takes less than 0.05 seconds*
 *Add, view, and delete can be performed in less than one LOC*
@@ -153,6 +154,7 @@ example, adding another item, or order, to an existing customer record. Both the
 small and big database add an item to a customer record, while the big database
 additionally adds a new order (including items) into a customer record. This
 test corresponds specifically to the requirements:
+
 *An element can be added to an item within the database*
 *Adding element takes less than 0.05 seconds*
 *Add, view, and delete can be performed in less than one LOC*
@@ -175,6 +177,7 @@ field is located and updated in the record. In order to preform this operation,
 it is necessary that the database engine provide a means to access data fields
 or elements of the database. This test corresponds specifically to the
 requirements:
+
 *An element can be retrieved from the database*
 *Accessing an element takes less than 0.01 seconds*
 *Add, view, and delete can be performed in less than one LOC*
@@ -195,6 +198,7 @@ rest of the information in the database. This test instead focuses on the
 removal of a complete item and its related fields, or an order and its related
 fields as well as all items it contains. This test corresponds specifically to
 the requirements:
+
 *An element can be removed from any location within the database*
 *Deleting an element takes less than .1 seconds*
 *Add, view, and delete can be performed in less than one LOC*
@@ -212,6 +216,7 @@ the database. This differs from the previous "Remove Item in Record" test
 category as it is a top level removal which for the purposes of this database
 would be a customer record and all its associated order and item records as
 well. This test corresponds specifically to the requirements:
+
 *An element can be removed from any location within the database*
 *Deleting an element takes less than .1 seconds*
 *Add, view, and delete can be performed in less than one LOC*
@@ -238,13 +243,47 @@ formats the idea was to keep the test as fair as possible by having each engine
 work with a single large table. This means that this data is an approximate
 indicator of how each database engines performance scales as more and more
 records are added. This test corresponds specifically to the requirements:
+
 *An element can be added to the database*
 *A TinyDB can consist of 1,000 elements which have 500 sub-elements*
 *Adding element takes less than 0.05 seconds*
 *Add, view, and delete can be performed in less than one LOC*
 
-TinyDB was capable of storing the large dataset, however it's performance took
+TinyDB was capable of storing the large dataset, however its performance took
 a hit as the size of the database increased. The chart below illustrates this
 issue.
 
 ![TinyDB Insert Performance](tdb_inserts.png)
+
+Meanwhile, sqlite3 never exceeded 0.2 seconds for any of its 500,000 inserts.
+
+#### Documentation Quality
+While not a formal test like all the other operations on the databases, during
+the creation of these tests, the documentation can be assessed (albeit slightly
+biased) from the experience gained during this process. While "quality" itself
+is subjective it is more clearly defined for the purposes of assessment. A
+quality documentation consists of:
+  1. A presentation of the API
+  1. Complete examples of utilizing the API
+  1. External references with plentiful search results (eg. first page of Google
+    results)
+
+TinyDB was adequate for two of these three quality indicators. An orderly and
+clean presentation of the basic and advanced usage of the API was contained on
+the TinyDB website complete with examples. However, while developing the testing
+suite and trying to work with more complicated examples, Google searches for
+additional documentation was not readily available and most references dealt
+with using TinyDB with the Android MIT App Inventor web service. This lack of
+external documentation slowed down the process of creating the test as
+significantly more time was spent on trial and error. Sqlite3 on the other hand
+succeeded in all three categories. The python module documentation was clean and
+contained examples. When the documentation was insufficient for the task at
+hand, Google searches were plentiful for both sqlite3 by itself (via cli) and
+use of sqlite3 with python.
+
+### Conclusion
+With a small amount of data, TinyDB can be fast and relatively convenient, but
+major issues begin to arise as the size of the dataset grows. In terms of
+latency time for operations (performance) TinyDB's latency is well over the
+limits stated in the testing plan and at times nearly 6 seconds to perform an
+operation while sqlite3 fair far better in all tests with the exception of 
