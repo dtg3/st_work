@@ -99,7 +99,7 @@ an oracle. Specifically this was the case when searching for "Hitchhiker's
 Guide to the Galaxy".
 
 A search by title (e.g., "Harry Potter") and location (e.g. "Tompkins Square")
-resulted in less results in the product when compared to the old version of the
+returned less results in the product when compared to the old version of the
 NYPL Catalog used as an oracle (25 vs. 30).
 
 In testing the view of the location in which copies are at, when searching for
@@ -107,15 +107,25 @@ The Hitchhiker's Guide to the Galaxy via ISBN, we found that the old catalog
 had a copy of it at the Ottendorfer Fiction library, but the new catalog had
 all of the same location listings except this one.
 
+Doing a search by ISBN in the new catalog unexpectedly showed more than one
+result in some cases (see 1451673310 for Fahrenheit 451). To mitigate this
+disparity during testing that books can be searched by ISBN, we checked that
+the results were at least less than five. However, while this was not
+explicitly stated in the requirements we test for, the issue remains that a
+search by unique ISBN does not return a single unique title.
+
 Unless otherwise stated, the remaining tests passed.
 
 
-In testing, found that
-* searching by ISBN in new NYPL revealed more than one result in some cases (see 1451673310 for fahrenheit 451). to mitigate, checked that results were less than 5. expected ISBN to be unique.
-* test copies match and nCopies is == oCopies not just >=
-
 ## Conclusion
 
-We conclude that the NYPL Catalog is not complete. While the responsiveness
-and security has passed, part of the expected search and view functionality has
-failed. 
+A set of ten functional and non-functional requirements were tested using
+python and selenium. These automated tests verified the listed requirements in
+terms of search and view functionality, as well as security and responsiveness.
+Several issues were found with the functional requirements that caused the
+acceptance test to fail. As these issues were discovered using simple test
+cases, we expect that they persist in other cases throughout the system.
+
+Thus, we conclude that the NYPL Catalog is not complete. While the
+responsiveness and security features are acceptable based on the terms of
+the contract, part of the expected search and view functionality has failed.
