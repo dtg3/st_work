@@ -121,10 +121,13 @@ grouped together by the activity or performance timing indicator. Each test
 includes a basic description of the test itself, and the results of the test.
 For simplicity, all mentions in the tests referring to a "small database" refers
 to the simple data shown above, while "big database" refers to the large 1,000
-customer record mock database. It should be noted that the small database and
-big database tests are separate, but once again, for brevity and since they
-cover similar operations they are both covered in the general test categories
-below.
+customer record mock database. Additionally, when the number of lines of code
+(LOC) required to perform any task is presented this refers to number of
+statements.This means if one statement spans multiple lines in the text
+document, it still only constitutes one line of code. It should also be noted
+that the small database and big database tests are separate, but once again,
+for brevity and since they cover similar operations they are both covered in the
+general test categories below.
 
 #### Add Record
 This test is used to evaluate that sqlite3 and TinyDB are capable of adding a
@@ -163,4 +166,85 @@ order addition. The sqlite version is able to add an item to a record in
 the big database in only 0.0007 seconds while still only requiring only two
 lines of code.
 
-#### 
+#### Update Item in Record
+This test is used to evaluate the capabilities of the database engines to update
+information in the database. This differs from add operations in that add new
+data content into the database while the update only changes the value of
+existing database record content. For both the small and big databases, only one
+field is located and updated in the record. In order to preform this operation,
+it is necessary that the database engine provide a means to access data fields
+or elements of the database. This test corresponds specifically to the
+requirements:
+*An element can be retrieved from the database*
+*Accessing an element takes less than 0.01 seconds*
+*Add, view, and delete can be performed in less than one LOC*
+
+Once again, for the small database, TinyDB took 0.0001 seconds to access the
+information. However, to collect and update the record required seven lines of
+code. When tasked with a big database, access to a record took 1.5162 seconds
+and took ten lines of code to access the item. The sqlite3 database on the other
+hand only took two lines of code to accomplish the update task and did so in
+only 0.1572 seconds.
+
+#### Remove Item in Record
+This test ensures that it is possible to remove specific pieces of information
+contained within a record. Removals for both the small and big databases refers
+to the removal of a complete item subset. For example it would not make sense to
+just remove an item's identification number, price, or quantity and leave the
+rest of the information in the database. This test instead focuses on the
+removal of a complete item and its related fields, or an order and its related
+fields as well as all items it contains. This test corresponds specifically to
+the requirements:
+*An element can be removed from any location within the database*
+*Deleting an element takes less than .1 seconds*
+*Add, view, and delete can be performed in less than one LOC*
+
+Using TinyDB with a small database, an item removal was able to be accomplished
+in only 0.0001 seconds using nine lines of code. For the big database, TinyDB
+required twelve lines of code and took 5.4676 seconds to remove an item from
+an order while removal of an order and its items required ten lines of code and
+took 5.6194 seconds. Sqlite3 on the other hand was able to delete an item in
+0.1659 seconds and required two lines of code to perform the operation.
+
+#### Remove a Record
+This test is used to evaluate the ability to remove top level record data from
+the database. This differs from the previous "Remove Item in Record" test
+category as it is a top level removal which for the purposes of this database
+would be a customer record and all its associated order and item records as
+well. This test corresponds specifically to the requirements:
+*An element can be removed from any location within the database*
+*Deleting an element takes less than .1 seconds*
+*Add, view, and delete can be performed in less than one LOC*
+
+The small database with TinyDB removal of a record took only two lines of code
+and 0.0001 seconds. For the big database, TinyDB still only required two lines
+of code buy took 5.4708 seconds to perform the operation. Sqlite3 was also able
+to perform the record deletion in two lines of code, and took 0.1659 seconds.
+
+#### Record Insertion Performance
+While this test is similar to the add record test in that it requires the
+database engine to be able to create new records (customer records) into the
+database it differs in a few key ways.
+  1. This test is only applied to the big database using the mock dataset
+  1. This test starts with an empty database and inserts records until the
+  maximum number of items is reached
+    - For TinyDB, this means 1000 customer records with 50 orders each
+    containing 10 items in one table
+    - For sqlite3. this means that all the same record information was
+    flattened into 500,000 records and inserted into one table
+  1. Each insert is timed individually until all insertions are complete
+While this may not be the optimal way of storing data in these respective
+formats the idea was to keep the test as fair as possible by having each engine
+work with a single large table. This means that this data is an approximate
+indicator of how each database engines performance scales as more and more
+records are added. This test corresponds specifically to the requirements:
+*An element can be added to the database*
+*A TinyDB can consist of 1,000 elements which have 500 sub-elements*
+*Adding element takes less than 0.05 seconds*
+*Add, view, and delete can be performed in less than one LOC*
+
+TinyDB was capable of storing the large dataset, however it's performance took
+a hit as the size of the database increased. The chart below illustrates this
+issue.
+
+![TinyDB Insert Performance](tdb_inserts.png)

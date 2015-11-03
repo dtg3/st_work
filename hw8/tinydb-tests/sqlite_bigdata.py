@@ -57,23 +57,23 @@ class SqliteBigData(unittest.TestCase):
 			SELECT * from orders
 			where cust_id = '123'
 			''')
-		
+
 		for row in cursor:
 			self.assertTrue((row[0] == '123' and row[4] == 'a1b2c3'))
 
-	
+
 	def test_sqlite_02_bigdata_update_record(self):
 		print ("\nSQLITE BIG DATA --- UPDATE RECORD")
 		cursor = conn.execute('''
 			SELECT * from orders
 			where cust_id = '123'
 			''')
-		
+
 		for row in cursor:
 			self.assertTrue((row[2] == 'abc' and row[6] == 8))
 
 		t = time.time()
-		db.execute('''update orders set item_qty = 10 
+		db.execute('''update orders set item_qty = 10
 			where cust_id = '123'
 			and order_id = 'abc'
 			and item_id = 'a1b2c3'
@@ -86,7 +86,7 @@ class SqliteBigData(unittest.TestCase):
 			SELECT * from orders
 			where cust_id = '123'
 			''')
-		
+
 		for row in cursor:
 			self.assertTrue((row[2] == 'abc' and row[6] == 10))
 
@@ -109,7 +109,7 @@ class SqliteBigData(unittest.TestCase):
 			SELECT * from orders
 			where cust_id = '0000000'
 			''')
-		
+
 		for row in cursor:
 			self.assertTrue((row[2] == 'AAAAAA' and row[5] == 'Batmobile'))
 
@@ -133,7 +133,6 @@ class SqliteBigData(unittest.TestCase):
 		for row in cursor:
 			for count in row:
 				self.assertEqual(count, 0)
-		
 
 if __name__ == '__main__':
 	unittest.main(warnings='ignore')
