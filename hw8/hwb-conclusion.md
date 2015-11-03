@@ -108,21 +108,37 @@ CREATE TABLE orders
 ```
 
 The resulting sqlite3 table contains 500,000 records all populated with the same
-data from the mock dataset.
+data from the mock dataset. Since it is assumed that large databases will task
+the respective engines (sqlite3 and TinyDB) more than small record sets, only
+the large scale tests will be replicated with sqlite3 as a basis for comparison
+between the two engines.
 
 ### Testing
 The following section introduces the set of tests used to provide evidence of
-TinyDB's viability as a database engine as a customer database. Each test
+TinyDB's viability as a database engine as a customer database. Since the total
+number of tests 
+
+Each test
 includes a basic description of the test itself, and the results of the test.
 For simplicity, all mentions in the tests referring to a "small database" refers
 to the simple data shown above, while "big database" refers to the large 1,000
-mock customer database.
+mock customer database. It should be noted that the small database and big
+database tests are separate, but for brevity since the cover similar operations
+they are both covered in the test categories below. Additionally each test name
+is prepended with the name of the database engine used in the test and TinyDB
+tests are explained and evaluated separately from sqlite3 tests.
 
 #### TinyDB Add Record
 This test is used to evaluate that TinyDB is capable of adding a new record to a
-dataset. For the small database, TinyDB was very capable of inserting a new
-customer record into a database and with a speedy performance time of 0.0002
-seconds. However, for the big database
+dataset. Both the small database and big database have a single customer record
+complete with items (and orders in the case of the big database) added to the
+database. This test corresponds specifically to the requirements:
+*An element can be added to the database*
+*Adding element takes less than 0.05 seconds*
+
+When dealing with the small database, TinyDB was very capable of
+inserting a new customer record into a database and with a speedy performance
+time of 0.0002 seconds. Additionally, the code required to iHowever, for the big database
 
 
 
