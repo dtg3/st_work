@@ -347,3 +347,19 @@ HW: Find bug on site / Send webdriver code
 	* git checkout chapter_05
 	* manage.py migrate
 	* manage.py test
+
+### Wednesday, November 4, 2015
+* Gather Evidence that a piece of software works in production environment
+* Can't always run lots of tests in the presence of customers
+* Prepare an environment like production (QA or static site testing)
+* Staging Sites
+	* Imitate production site
+	* Burn down staging server and restage (want to reherse the deployment as well)
+* Want to run against static site
+* "www.foo.com" -> top level domain
+* TO DO:
+	* Look at the slides
+	* Get a server - digital ocean, linode, etc.
+	* Get nginx
+	* Send LAN id and point server there (OUTSIDE IP ADDRESS)
+		* Also kent id
