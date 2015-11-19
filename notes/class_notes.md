@@ -363,3 +363,125 @@ HW: Find bug on site / Send webdriver code
 	* Get nginx
 	* Send LAN id and point server there (OUTSIDE IP ADDRESS)
 		* Also kent id
+
+### Wednesday, November 18, 2015
+* Reasons for Failure
+	* Wrong requirements
+	* Defective code
+	* Defective tools
+* Problem in execution environment (server / desktop / etc)
+	* This probably is the most common reason for outage
+	* Really expensive
+	* Sophisticated software architectures are making it worse
+
+* Reasons environment fails
+	* Missing dependencies
+		* Libraries
+		* Tools
+		* Volumes
+		* Ports
+		* Connections
+		* Credentials
+	* Lack of Capacity
+		* Memory
+		* Disk Space
+		* CPU Speed
+		* Network Bandwidth
+		* Parallel Capacity
+	* Changes in the environment
+		* Additional activity
+		* Cpapcity consumption
+		* Connectivity Issues
+		* Patches
+		* Interference - side effects from other work
+		* Malware
+		* Credentialing issues
+		* Power failure
+
+* How does this relate to testing?
+	* Testing the environmental requirements
+	* Repeating that test on the target environments
+	* Periodically verifying the target environment
+	* Environmental assessment in case of failure
+
+* Environment as Software
+	* Tools hae been made to _create_ environments.
+		* Batch Files
+		* Recipies
+		* Containers
+	* These can be adapted to testing work
+		* Test the correct execution of the setup program
+		* Compare recipes to current state
+		* Evaluate container construction _and_ state
+			* Combine the reciepies of states with module data
+			* Composible recipe sets
+
+* Recipes
+	* Create a tool to describe desired state
+	* Put an agent on ta machine, tell it what recipe to follow
+	* Agent updates machine to match recipe
+	* Recipe conformance is testable
+
+* Puppet
+	* puppetlabs.com
+	* puppetlabs.com/puppet/what-is-puppet
+
+* Catalogs
+	* Puppet configures systems in two main stages:
+		* Compile a catalog
+		* Apply the catalog
+	* What is a Catalog?
+		* A catalog is a document that describes the desired system state for one specific compter
+		* Lists all the of the resource (...)
+
+* [Example manifest]
+
+* Chef - Alternative to Puppet
+	* This is where the "recipe" term comes from
+	* Scanning for compliance is a large draw here
+	* Learn Chef (Ubuntu)
+
+* Ansible
+	* Youtube tut
+	* Playbooks
+
+* Programatic Colutions
+	* Remote control of machines
+		* Write function in, say python
+		* Part of the function is executed remotely
+	* These allow you to program remote machines
+		* Functions to set things up - configuration
+		* Functions to return values - testing
+	* Paramiko - remote control
+	* Fabric - convenient configuration
+	* Yarn - alternative for Python 3.x
+
+* Paramiko
+	* www.paramiko.org
+	* Implements SSH for remote login
+	* Very low-level
+	* [Paramiko Example]
+
+* Fabric
+	* Easy remote command run a series of hosts
+	* www.fabfile.org
+	* only python 2.7 at this time
+	* author not porting, but ports are available
+
+* Yarn
+	* Github.com/python-yarn/yarn
+	* written in Python3
+	* uses paramiko
+	* very easy to use
+	* array of strings
+
+* Homework
+	* get a remote computer running
+		* Vagrant or cloud computer
+	* execute some yarn commands against it
+	* Use python unittest framework to test some setup parameters
+	* Is <?> installed?
+	* Is <?> directory created?
+	* Does this dorectroy have the right permissions?
+	*  ...etc
+* As always, send me something showing that you did this
