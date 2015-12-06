@@ -15,7 +15,16 @@ def install_utils():
     # install tmux
     if (not run("which tmux")):
         install("tmux")
-        
+
+    if (not run("which python3")):
+        install("python3")
+
+    if (not run("which pip3")):
+        install("python3-pip")
+
+    if (not run("pip3 list | grep -io django")):
+        result = run( "echo \'" + sudo + "\' | sudo -kS pip3 install django==1.8.4")
+        print("Installed: Django")
 
 if __name__ == "__main__":
     env.host_string = host

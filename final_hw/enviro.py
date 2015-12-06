@@ -18,5 +18,10 @@ class Test_000_Environment(unittest.TestCase):
     def test_002_pip3(self):
         self.assertTrue(run("which pip3"))
 
+    def test_003_django(self):
+        results = run("pip3 list | grep -io django.*")
+        self.assertTrue(results)
+        self.assertTrue("1.8" in results)
+
 if __name__ == "__main__":
     unittest.main()
