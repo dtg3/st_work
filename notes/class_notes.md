@@ -374,7 +374,7 @@ HW: Find bug on site / Send webdriver code
 	* Really expensive
 	* Sophisticated software architectures are making it worse
 
-* Reasons environment fails
+* Reasons environment failure
 	* Missing dependencies
 		* Libraries
 		* Tools
@@ -445,15 +445,15 @@ HW: Find bug on site / Send webdriver code
 	* Youtube tut
 	* Playbooks
 
-* Programatic Colutions
+* Programatic Solutions
 	* Remote control of machines
 		* Write function in, say python
 		* Part of the function is executed remotely
 	* These allow you to program remote machines
 		* Functions to set things up - configuration
 		* Functions to return values - testing
-	* Paramiko - remote control
-	* Fabric - convenient configuration
+	* Paramiko - remote control (ssh)
+	* Fabric - convenient configuration (sits on top of paramiko (python 2.7))
 	* Yarn - alternative for Python 3.x
 
 * Paramiko
@@ -461,6 +461,11 @@ HW: Find bug on site / Send webdriver code
 	* Implements SSH for remote login
 	* Very low-level
 	* [Paramiko Example]
+	* Challenging install on Windows
+	* Can install Vagrant and use it there
+	* PythonAnywhere has it installed
+	* Codio easy to install
+	* Use it from any Ubuntu/Linux box
 
 * Fabric
 	* Easy remote command run a series of hosts
@@ -485,3 +490,67 @@ HW: Find bug on site / Send webdriver code
 	* Does this dorectroy have the right permissions?
 	*  ...etc
 * As always, send me something showing that you did this
+
+
+### Wednesday, December 2, 2015
+* Test Driven Infrastructure
+	* Design a test to verify some aspect of infrastructure
+	* Watch test fail
+	* Fix the problem
+		* Probably a dependency
+		* Ideally, with automation
+	* Run the test again
+	* Test suitability of environment
+* private.py
+	* use a private credentials file that doesn't check in
+		* user="foo"
+		* password="bar"
+	* add "private.py" to .gitignore
+	* from private import user, password
+* Basic Plan
+	* Write Unit Tests to Verify Reqirements
+		* These will eventually become regression tests for the environment
+	* Write Remote Methods to Set Up Environment
+		* These will make the tests pass
+		* These will become the basis for automated deployment
+* Source Control -> Build -> Staging (binaries) -> End User Machine
+
+What are the Limits?
+* Obtaining servers from the cloud and verifiying
+	* Linode, DigitalOcean, Amazon and Azure all have APIs
+	* All are accessible from Python
+* Initial configuration
+	* Start with root account
+	* Possible to change to user account for later setup
+* Package installation
+	* Remote operation of git, etc.
+* Application configuration
+	* External configuration
+	* Internal work via WebDriver
+
+Does TDD Work Here?
+* I claim it does
+* Simple tools are better
+	* until they become inadequate
+* that reliable setup leads to reliable evironments
+* This approach creates
+	* reusable deplyoment assets
+	* useful regression
+[See slides for rest]
+
+* Find some place linode
+	* install automated
+* In test suit, test everything (setup to selenium)
+
+* Subject
+	* TESTING or STM
+	* HWn 
+	* phrase describing the work
+* In the body of email
+	* Your Kent State email address as text
+	* email text
+		* wat to say
+	* images
+	* NOTHING ELSE
+* All HW Due before the class session in finals week
+
