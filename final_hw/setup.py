@@ -26,6 +26,9 @@ def install_utils():
         result = run( "echo \'" + sudo + "\' | sudo -kS pip3 install django==1.8.4")
         print("Installed: Django")
 
+    if (not run("which wget")):
+        install("wget")
+
 if __name__ == "__main__":
     env.host_string = host
     env.user = username

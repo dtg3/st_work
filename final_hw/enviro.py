@@ -23,5 +23,9 @@ class Test_000_Environment(unittest.TestCase):
         self.assertTrue(results)
         self.assertTrue("1.8" in results)
 
+    def test_004_wget(self):
+        self.assertTrue(run("which wget"))
+
+
 if __name__ == "__main__":
     unittest.main()
