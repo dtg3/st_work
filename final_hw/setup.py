@@ -13,8 +13,8 @@ def install(appName):
 
 def install_reqs():
     # install tmux
-    if (not run("which tmux")):
-        install("tmux")
+    #if (not run("which tmux")):
+        #install("tmux")
 
     # install pyhton3
     if (not run("which python3")):
@@ -49,13 +49,30 @@ def app_setup():
         run("cd webapps/todo; mv st-site-master superlists")
 
     # create database directory
-    if (not run("cd webapps/todo ls -l | grep database")):
+    if (not run("cd webapps/todo; ls -l | grep database")):
         run("cd webapps/todo; mkdir database")
     
     # run databse migration
     if (not run("cd webapps/todo/database; ls -l | grep db.sqlite3")):
         run("cd webapps/todo/superlists; python3 manage.py migrate --noinput")
-        #run("cd webapps/todo/superlists; python manage.py runserver 0.0.0.0:8000")
+
+def app_start():
+    started = False
+    results = run("ps -ef")
+
+    for line in results.splitlines():
+        if "webapps/todo/superlists/manage.py" in line.lower():
+            started = True
+
+    if not started:
+        run("nohup python3 webapps/todo/superlists/manage.py runserver 0.0.0.0:8000 > /dev/null 2>&1 &")
+
+def app_stop():
+    results = run("ps -ef")
+
+    for line in results.splitlines():
+        if "webapps/todo/superlists/manage.py" in line.lower():
+            run("kill -9 " + line.split()[1])
 
 if __name__ == "__main__":
     env.host_string = host
@@ -66,3 +83,5 @@ if __name__ == "__main__":
     install_reqs()
     print("Install App")
     app_setup()
+    print("Launch App")
+    app_launch()

@@ -9,21 +9,18 @@ class Test_000_Environment(unittest.TestCase):
         env.user = username
         env.password = password
 
-    def test_000_tmux(self):
-        self.assertTrue(run("which tmux"))
-
-    def test_001_python3(self):
+    def test_000_python3(self):
         self.assertTrue(run("which python3"))
 
-    def test_002_pip3(self):
+    def test_001_pip3(self):
         self.assertTrue(run("which pip3"))
 
-    def test_003_django(self):
+    def test_002_django(self):
         results = run("pip3 list | grep -io django.*")
         self.assertTrue(results)
         self.assertTrue("1.8" in results)
 
-    def test_004_wget(self):
+    def test_003_wget(self):
         self.assertTrue(run("which wget"))
 
 class Test_001_AppInstall(unittest.TestCase):
@@ -38,16 +35,22 @@ class Test_001_AppInstall(unittest.TestCase):
         self.assertTrue(run("cd webapps/todo; ls -l | grep superlists"))
         self.assertTrue(run("cd webapps/todo/; ls -l | grep database"))
         self.assertTrue(run("cd webapps/todo/database; ls -l | grep db.sqlite3"))
-'''
+
 class Test_002_LaunchApp(unittest.TestCase):
     def setUp(self):
         env.host_string = host
         env.user = username
         env.password = password
 
-    def test_000_launch_app(self):
-        results = run("tmux list-sessions 2>&1")        
-        self.assertFalse("failed to connect to server: Connection refused" in results)
-'''
+    def test_000_app_running(self):
+        started = False
+        results = run("ps -ef")
+
+        for line in results.splitlines():
+            if "webapps/todo/superlists/manage.py" in line.lower():
+                started = True
+
+        self.assertTrue(started)
+
 if __name__ == "__main__":
     unittest.main()
