@@ -1,10 +1,9 @@
 from yarn.api import env, cd, run
 import private
 import unittest
-#import urllib.request
-#import urllib.parse
-#import urllib.error
 
+# pip3 install requests
+import requests
 
 class Test_000_Environment(unittest.TestCase):
     def setUp(self):
@@ -103,9 +102,9 @@ class Test_003_RunningApp(unittest.TestCase):
 
         self.assertTrue(started)
 
-    #def test_001_request(self):
-    #    req = urllib.request.Request("http://" + private.host + ":" + private.port)
-    #    print(req)
+    def test_001_live_request(self):
+        response = requests.get("http://" + private.host + ":" + private.port)
+        self.assertTrue(response.status_code == 200)
 
 if __name__ == "__main__":
     unittest.main()

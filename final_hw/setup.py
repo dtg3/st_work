@@ -1,7 +1,10 @@
 from yarn.api import env, cd, run
 import private
-
 import unittest
+
+# pip3 install requests
+import requests
+
 
 def install(appName):
     result = run( "echo \'" + sudo + "\' | sudo -kS apt-get -q -y --force-yes install " + appName + " 2>&1")
@@ -59,6 +62,10 @@ def app_start():
     for line in results.splitlines():
         if (private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py") in line.lower():
             started = True
+
+    response = requests.get("http://" + private.host + ":" + private.port)
+    if response.status_code == 200:
+        started = True
 
     if not started:
         run("nohup python3 " + private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py runserver 0.0.0.0:8000 > /dev/null 2>&1 &")
