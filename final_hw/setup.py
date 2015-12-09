@@ -63,9 +63,12 @@ def app_start():
         if (private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py") in line.lower():
             started = True
 
-    response = requests.get("http://" + private.host + ":" + private.port)
-    if response.status_code == 200:
-        started = True
+    try:
+        response = requests.get("http://" + private.host + ":" + private.port)
+        if response.status_code == 200:
+            started = True
+    except requests.exceptions.RequestException as e:
+        started = False
 
     if not started:
         run("nohup python3 " + private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py runserver 0.0.0.0:8000 > /dev/null 2>&1 &")

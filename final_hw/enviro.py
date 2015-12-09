@@ -96,7 +96,6 @@ class Test_003_RunningApp(unittest.TestCase):
         results = run("ps -ef")
 
         for line in results.splitlines():
-
             if (private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py") in line.lower():
                 started = True
 
