@@ -12,10 +12,6 @@ def install(appName):
     print ("Installed: " + appName)
 
 def install_reqs():
-    # install tmux
-    #if (not run("which tmux")):
-        #install("tmux")
-
     # install pyhton3
     if (not run("which python3")):
         install("python3")
