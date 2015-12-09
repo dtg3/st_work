@@ -1,5 +1,5 @@
 from yarn.api import env, cd, run
-from private import host, username, password, sudo
+import private
 
 import unittest
 
@@ -35,53 +35,55 @@ def install_reqs():
 
 def app_setup():
     # download app and make root directory
-    if (not run("ls -l | grep webapps")):
+    if (not run("ls -l | grep " + private.webRoot)):
         run("wget https://github.com/dtg3/st-site/archive/master.zip -O webapp.zip 2>&1")
-        run("mkdir webapps")
+        run("mkdir " + private.webRoot)
 
     # unzip app and cleanup zip file
-    if (not run("ls -l webapps | grep todo")):
-        run("unzip webapp.zip -d webapps/todo")
+    if (not run("ls -l " + private.webRoot + " | grep " + private.appRoot)):
+        run("unzip webapp.zip -d " + private.webRoot + "/" + private.appRoot)
         run ("rm webapp.zip")
     
     # rename application directory
-    if (not run("cd webapps/todo; ls -l | grep superlists")):
-        run("cd webapps/todo; mv st-site-master superlists")
+    if (not run("cd " + private.webRoot + "/" + private.appRoot + "; ls -l | grep " + private.appContent)):
+        run("cd " + private.webRoot + "/" + private.appRoot + "; mv st-site-master " + private.appContent)
 
     # create database directory
-    if (not run("cd webapps/todo; ls -l | grep database")):
-        run("cd webapps/todo; mkdir database")
+    if (not run("cd " + private.webRoot + "/" + private.appRoot + "; ls -l | grep " + private.appDatabase)):
+        run("cd " + private.webRoot + "/" + private.appRoot + "; mkdir " + private.appDatabase)
     
     # run databse migration
-    if (not run("cd webapps/todo/database; ls -l | grep db.sqlite3")):
-        run("cd webapps/todo/superlists; python3 manage.py migrate --noinput")
+    if (not run("cd " + private.webRoot + "/" + private.appRoot + "/" + private.appDatabase + "; ls -l | grep db.sqlite3")):
+        run("python3 " + private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py migrate --noinput")
 
 def app_start():
     started = False
     results = run("ps -ef")
 
     for line in results.splitlines():
-        if "webapps/todo/superlists/manage.py" in line.lower():
+        if (private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py") in line.lower():
             started = True
 
     if not started:
-        run("nohup python3 webapps/todo/superlists/manage.py runserver 0.0.0.0:8000 > /dev/null 2>&1 &")
+        run("nohup python3 " + private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py runserver 0.0.0.0:8000 > /dev/null 2>&1 &")
 
 def app_stop():
     results = run("ps -ef")
 
     for line in results.splitlines():
-        if "webapps/todo/superlists/manage.py" in line.lower():
+        if (private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py") in line.lower():
             run("kill -9 " + line.split()[1])
 
 if __name__ == "__main__":
-    env.host_string = host
-    env.user = username
-    env.password = password
+    env.host_string = private.host
+    env.user = private.username
+    env.password = private.password
 
     print("Install Requirements")
     install_reqs()
     print("Install App")
     app_setup()
     print("Launch App")
-    app_launch()
+    app_start()
+    print("Terminate App")
+    app_stop()

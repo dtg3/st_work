@@ -1,13 +1,16 @@
 from yarn.api import env, cd, run
-from private import host, username, password
-
+import private
 import unittest
+#import urllib.request
+#import urllib.parse
+#import urllib.error
+
 
 class Test_000_Environment(unittest.TestCase):
     def setUp(self):
-        env.host_string = host
-        env.user = username
-        env.password = password
+        env.host_string = private.host
+        env.user = private.username
+        env.password = private.password
 
     def test_000_python3(self):
         self.assertTrue(run("which python3"))
@@ -25,32 +28,37 @@ class Test_000_Environment(unittest.TestCase):
 
 class Test_001_AppInstall(unittest.TestCase):
     def setUp(self):
-        env.host_string = host
-        env.user = username
-        env.password = password
+        env.host_string = private.host
+        env.user = private.username
+        env.password = private.password
 
     def test_000_app_directories(self):
-        self.assertTrue(run("ls -l | grep webapps"))
-        self.assertTrue(run("cd webapps; ls -l | grep todo"))
-        self.assertTrue(run("cd webapps/todo; ls -l | grep superlists"))
-        self.assertTrue(run("cd webapps/todo/; ls -l | grep database"))
-        self.assertTrue(run("cd webapps/todo/database; ls -l | grep db.sqlite3"))
+        self.assertTrue(run("ls -l | grep " + private.webRoot))
+        self.assertTrue(run("cd " + private.webRoot + "; ls -l | grep " + private.appRoot))
+        self.assertTrue(run("cd " + private.webRoot + "/" + private.appRoot + "; ls -l | grep " + private.appContent))
+        self.assertTrue(run("cd " + private.webRoot + "/" + private.appRoot + "; ls -l | grep " + private.appDatabase))
+        self.assertTrue(run("cd " + private.webRoot + "/" + private.appRoot + "/" + private.appDatabase + "; ls -l | grep db.sqlite3"))
 
 class Test_002_LaunchApp(unittest.TestCase):
     def setUp(self):
-        env.host_string = host
-        env.user = username
-        env.password = password
+        env.host_string = private.host
+        env.user = private.username
+        env.password = private.password
 
-    def test_000_app_running(self):
+    def test_000_app_process(self):
         started = False
         results = run("ps -ef")
 
         for line in results.splitlines():
-            if "webapps/todo/superlists/manage.py" in line.lower():
+
+            if (private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py") in line.lower():
                 started = True
 
         self.assertTrue(started)
+
+    #def test_001_request(self):
+    #    req = urllib.request.Request("http://" + private.host + ":" + private.port)
+    #    print(req)
 
 if __name__ == "__main__":
     unittest.main()
