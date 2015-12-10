@@ -35,6 +35,9 @@ def stop_server():
             print("kill server pid: " + str(line.split()[1]) + "...")
             run("kill -9 " + line.split()[1])
 
+def cleanup_db():
+    run("python3 " + private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py migrate --noinput")
+
 class NewVisitorTest(unittest.TestCase):
 
     def setUp(self):
@@ -150,10 +153,12 @@ if __name__ == "__main__":
     env.host_string = private.host
     env.user = private.username
     env.password = private.password
+    
     start_server()
     time.sleep(5)
 
-    unittest.main(exit=False)
+    unittest.main(exit=False, warnings='ignore')
 
     stop_server()
+    cleanup_db()
     

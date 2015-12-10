@@ -2,9 +2,6 @@ from yarn.api import env, cd, run
 import private
 import unittest
 
-# pip3 install requests
-import requests
-
 class Test_000_AppUnitTests(unittest.TestCase):
     def setUp(self):
         env.host_string = private.host

@@ -79,7 +79,7 @@ def app_stop():
         if (private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py") in line.lower():
             run("kill -9 " + line.split()[1])
 
-if __name__ == "__main__":
+def config():
     env.host_string = private.host
     env.user = private.username
     env.password = private.password
@@ -92,3 +92,7 @@ if __name__ == "__main__":
     app_start()
     print("Terminate App")
     app_stop()
+
+
+if __name__ == "__main__":
+    config()

@@ -638,3 +638,11 @@ Wednesday, December 9, 2015
 	* Stuff
 		* Definition of testing vs Naive idea of testing
 		* Summarize topics covered in lecture
+
+* RM 213
+	* Friday @ midnight
+	* Until 1 week from then
+
+Symbolic Execution
+	* Z = Add (X, Y)
+		* "A" "B" = "A + B"
