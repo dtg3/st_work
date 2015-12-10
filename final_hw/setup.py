@@ -5,7 +5,6 @@ import unittest
 # pip3 install requests
 import requests
 
-
 def install(appName):
     result = run( "echo \'" + sudo + "\' | sudo -kS apt-get -q -y --force-yes install " + appName + " 2>&1")
     for line in result.lower().splitlines():

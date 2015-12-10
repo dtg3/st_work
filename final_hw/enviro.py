@@ -75,17 +75,7 @@ class Test_001_AppInstall(unittest.TestCase):
         self.assertTrue("urls.py" in contents)
         self.assertTrue("wsgi.py" in contents)
 
-class Test_002_AppUnitTests(unittest.TestCase):
-    def setUp(self):
-        env.host_string = private.host
-        env.user = private.username
-        env.password = private.password
-
-    def test_000_unit_tests(self):
-        result = run("python3 " + private.webRoot + "/" + private.appRoot + "/" + private.appContent + "/manage.py test lists &>/dev/null; echo $?")
-        self.assertTrue(result == "0")
-
-class Test_003_RunningApp(unittest.TestCase):
+class Test_002_RunningApp(unittest.TestCase):
     def setUp(self):
         env.host_string = private.host
         env.user = private.username

@@ -554,3 +554,87 @@ Does TDD Work Here?
 	* NOTHING ELSE
 * All HW Due before the class session in finals week
 
+Wednesday, December 9, 2015
+* Purpose of testing
+* Goals of testing
+* Areas where business value can be added
+	* What stage can testing be used
+* Contexts
+	* TDD
+		* incremental unit testing - DEV
+			* Conform to requirements
+			* Provides evidence of reliability
+			* provide continuous regression
+				* ( Provide future regression tests )
+			* (Fast delivery value - Speed to market)
+	* Regression Testing - QA
+		* Agility to make business decisions (flexible)
+		* Stability (move from environment to environment, lib to lib, etc.)
+	* Acceptance Testing - END USER
+		* Ext. Blackbox
+		* End user involvement
+			* verifies functionality
+		* accepting the product as delivered (contract acceptance)
+		* agreement has been kept
+		* NYPL
+			* New implmentation better than old
+			* oracle
+		* have we gotten what we expect / money worth
+		* QA can act as representative for enduse and perform acceptance testing
+		* QA tests for business unit not software development unit
+	* Business Value Testing
+		* Is the business working?
+		* Balancing (total input and output  to make it balanced)
+		* Amazon
+			* Is our product available
+		* Faster you find out a part of the business is not functioning
+			* Faster you can get it fixed and
+			* Size, Duration, and cost to fix the problem
+				* 10K and hour, 60K to fix
+				* expected loss probability
+			* Keep probability down and fixing fast
+		* "Splunk"
+			* business monitoring
+		* Less likely, less costly, make less costly to fix
+	* Evaluation Testing (Viability testing)
+		* Look at new tech / tools / approaches / etc.
+		* Will something we want to use work?
+		* May offend the "championing" parties
+			* publish your data in neutral facts
+		* Depends on the level of acceptability
+		* Need problem statement so you can have solution statement
+	* (Performance Testing)
+		* Not necessarily a context on it's own as it can be in unit testing or even evalution testing
+		* Chaos monkey
+			* Utility to randomly kill computers
+			* Every system is designed to live in an environment where the servers go down right in the middle
+			* Would cause your system to be robust!
+		* Build automated recovery
+	* Environment Testing
+		* Make sure environment hasn't broken
+		* Repeated just for the environment NOT the software
+		* Regression testing for the environment
+		* Comes from incremental testing when your build it
+			* TTD
+		* Build software becomes repair software
+		* Test driven infrastructure
+		* Provide:
+			* Reliability
+			* Fast Repair
+			* Moving to new hardware
+				* Business lease them
+				* New stuff every three years
+			* Gives business courage / agile / faster time to market without destroying environments (QA)
+			* More effective to make better decisions
+* FINALS
+	* 1 or 2 questions
+	* Business context
+		* Buisiness value
+		* How do we know the values
+		* Testing contributes
+		* What did you do
+		* Mechanisms to achieve
+	* How would you talk about software testing
+	* Stuff
+		* Definition of testing vs Naive idea of testing
+		* Summarize topics covered in lecture
