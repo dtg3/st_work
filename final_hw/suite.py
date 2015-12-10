@@ -67,6 +67,7 @@ if __name__ == "__main__":
     time.sleep(5)
 
     # Run Test Suite
+    print ("Run Unit and Functional Tests")
     unittest.main(exit=False, warnings='ignore')
 
     stop_server()
